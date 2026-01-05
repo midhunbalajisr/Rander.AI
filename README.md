@@ -1,73 +1,96 @@
-# Welcome to your Lovable project
+# 🤖 RANDER.AI
 
-## Project info
+**AI-powered Error & Bug Fixing Platform**
 
-**URL**: https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID
+RANDER.AI is an intelligent LLM-based platform designed to automatically detect, analyze, and fix bugs and errors in software applications and digital products.
 
-## How can I edit this code?
+We help teams reduce debugging time, lower development costs, and focus on building meaningful solutions instead of chasing errors.
 
-There are several ways of editing your application.
+---
 
-**Use Lovable**
+## 🚀 What is RANDER.AI?
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and start prompting.
+Modern applications are complex, and errors are inevitable. Traditional debugging methods are manual, slow, and resource-heavy.
 
-Changes made via Lovable will be committed automatically to this repo.
+RANDER.AI solves this by using advanced AI models that understand code context, error patterns, and system behavior to provide accurate and reliable fixes with minimal human intervention.
 
-**Use your preferred IDE**
+---
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+## 🎯 Key Features
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+- 🤖 AI-driven bug & error detection  
+- 🧠 Context-aware code understanding  
+- ⚡ Faster debugging and resolution  
+- 🔄 Reduced dependency on manual developers  
+- 🧩 Works with real-world projects & products  
+- 📈 Built for scalability and future automation  
 
-Follow these steps:
+---
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+## 🛠️ What Problems We Solve
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+- Time-consuming manual debugging  
+- High dependency on skilled developers  
+- Complex and unreadable error logs  
+- Slower product release cycles  
+- High maintenance cost for growing products  
 
-# Step 3: Install the necessary dependencies.
-npm i
+> **Every unresolved bug slows growth. RANDER.AI removes that friction.**
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
-```
+---
 
-**Edit a file directly in GitHub**
+## 🧠 How It Works (Concept)
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+1. User submits their application or project details  
+2. RANDER.AI analyzes code and error logs  
+3. AI identifies the root cause  
+4. Intelligent fixes are generated  
+5. Results are delivered with clarity and speed  
 
-**Use GitHub Codespaces**
+---
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+## 🌍 Services We Offer
 
-## What technologies are used for this project?
+- AI Bug & Error Fixing  
+- Product-based AI Services  
+- Automation & Maintenance Solutions  
+- Intelligent Code Analysis  
 
-This project is built with:
+---
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+## 👥 Team
 
-## How can I deploy this project?
+- **Founder & CBA** – Midhunbalaji S  
+- **CEO** – Ajay S  
+- **CTO & CEO** – Arivumathi  
 
-Simply open [Lovable](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and click on Share -> Publish.
+---
 
-## Can I connect a custom domain to my Lovable project?
+## 📬 Contact Us
 
-Yes, you can!
+Want to collaborate, integrate, or learn more?
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+📧 Email: support@rander.ai  
+🌐 Website: https://rander.ai  
+📍 City: India  
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+---
+
+## 🌱 Vision
+
+Our vision is to build a future where software errors no longer block innovation.
+
+We believe AI should remove complexity, not add to it.
+
+> **Fix Bugs. Build Trust. Scale with AI.**
+
+---
+
+## 📄 License
+
+This project is proprietary and owned by **RANDER.AI**.  
+All rights reserved.
+
+---
+
+© 2026 RANDER.AI
