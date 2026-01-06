@@ -7,9 +7,11 @@ const Footer = () => {
         <div className="flex flex-col md:flex-row items-center justify-between gap-6">
           {/* Logo */}
           <Link to="/" className="flex items-center gap-2 group">
-            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-primary to-glow-secondary flex items-center justify-center">
-              <span className="text-primary-foreground font-display font-bold text-sm">R</span>
-            </div>
+            <img
+              src="/imgg/logo.png"
+              alt="RANDER.AI logo"
+              className="w-8 h-8 rounded-lg object-contain"
+            />
             <span className="font-display font-bold text-lg text-foreground">
               RANDER<span className="text-primary">.AI</span>
             </span>

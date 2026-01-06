@@ -70,9 +70,9 @@ RANDER.AI solves this by using advanced AI models that understand code context, 
 
 Want to collaborate, integrate, or learn more?
 
-📧 Email: support@rander.ai  
-🌐 Website: https://rander.ai  
-📍 City: India  
+📧 Email: rander.ai@gmail.com
+🌐 Website:
+📍 City: Chennai,Tamilnadu 
 
 ---
 

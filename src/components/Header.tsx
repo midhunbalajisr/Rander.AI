@@ -19,14 +19,19 @@ const Header = () => {
       <div className="mx-4 mt-4">
         <nav className="glass-card px-6 py-4 flex items-center justify-between max-w-7xl mx-auto">
           {/* Logo */}
-          <Link to="/" className="flex items-center gap-2 group">
-            <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-primary to-glow-secondary flex items-center justify-center shadow-lg shadow-primary/30">
-              <span className="text-primary-foreground font-display font-bold text-lg">R</span>
-            </div>
-            <span className="font-display font-bold text-xl text-foreground group-hover:text-primary transition-colors">
-              RANDER<span className="text-primary">.AI</span>
-            </span>
-          </Link>
+       <Link to="/" className="flex items-center gap-2 group">
+  <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-primary to-glow-secondary flex items-center justify-center shadow-lg shadow-primary/30 overflow-hidden">
+    <img
+      src="/imgg/logo.png"
+      alt="Rander AI Logo"
+      className="w-full h-full object-contain"
+    />
+  </div>
+
+  <span className="font-display font-bold text-xl text-foreground group-hover:text-primary transition-colors">
+    RANDER<span className="text-primary">.AI</span>
+  </span>
+</Link>
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center gap-8">

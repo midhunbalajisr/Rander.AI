@@ -19,16 +19,26 @@ const Contact = () => {
     e.preventDefault();
     setIsSubmitting(true);
 
-    // Simulate form submission
-    await new Promise((resolve) => setTimeout(resolve, 1000));
+    try {
+      const resp = await fetch("/api/send-email", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
 
-    toast({
-      title: "Message sent successfully!",
-      description: "We'll get back to you within 24 hours.",
-    });
-
-    setFormData({ name: "", email: "", phone: "", city: "" });
-    setIsSubmitting(false);
+      const data = await resp.json();
+      if (resp.ok && data.ok) {
+        toast({ title: "Message sent!", description: "We'll get back to you soon." });
+        setFormData({ name: "", email: "", phone: "", city: "" });
+      } else {
+        toast({ title: "Error", description: data.error || "Failed to send message." });
+      }
+    } catch (err) {
+      console.error(err);
+      toast({ title: "Error", description: "Failed to send message." });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -61,7 +71,7 @@ const Contact = () => {
                 </div>
                 <div>
                   <p className="text-sm text-muted-foreground">Email</p>
-                  <p className="font-semibold text-foreground">hello@rander.ai</p>
+                  <p className="font-semibold text-foreground">rander.ai.com@gmail.com</p>
                 </div>
               </div>
             </div>
@@ -73,7 +83,7 @@ const Contact = () => {
                 </div>
                 <div>
                   <p className="text-sm text-muted-foreground">Phone</p>
-                  <p className="font-semibold text-foreground">+1 (555) 123-4567</p>
+                  <p className="font-semibold text-foreground">+91 9655890702</p>
                 </div>
               </div>
             </div>
@@ -85,7 +95,7 @@ const Contact = () => {
                 </div>
                 <div>
                   <p className="text-sm text-muted-foreground">Location</p>
-                  <p className="font-semibold text-foreground">Global — Remote First</p>
+                  <p className="font-semibold text-foreground">Madras Engineering college,Student association centre,Chennai,Tamilnadu.</p>
                 </div>
               </div>
             </div>
