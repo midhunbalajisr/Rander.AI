@@ -71,7 +71,11 @@ const Contact = () => {
                 </div>
                 <div>
                   <p className="text-sm text-muted-foreground">Email</p>
-                  <p className="font-semibold text-foreground">rander.ai.com@gmail.com</p>
+                  <p className="font-semibold text-foreground">
+                    <a href="mailto:connect@randerai.in?subject=Inquiry" className="hover:text-primary transition-colors">
+                      connect@randerai.in
+                    </a>
+                  </p>
                 </div>
               </div>
             </div>

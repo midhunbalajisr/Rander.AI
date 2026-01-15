@@ -7,6 +7,7 @@ const navLinks = [
   { name: "Home", path: "/" },
   { name: "About", path: "/about" },
   { name: "Services", path: "/services" },
+  { name: "Testimonials", path: "/testimonials" },
   { name: "Contact", path: "/contact" },
 ];
 
@@ -17,56 +18,64 @@ const Header = () => {
   return (
     <header className="fixed top-0 left-0 right-0 z-50 animate-fade-in">
       <div className="mx-4 mt-4">
-        <nav className="glass-card px-6 py-4 flex items-center justify-between max-w-7xl mx-auto">
-          {/* Logo */}
-       <Link to="/" className="flex items-center gap-2 group">
-  <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-primary to-glow-secondary flex items-center justify-center shadow-lg shadow-primary/30 overflow-hidden">
-    <img
-      src="/imgg/logo.png"
-      alt="Rander AI Logo"
-      className="w-full h-full object-contain"
-    />
-  </div>
+        <nav className="relative px-6 py-4 flex items-center justify-between max-w-7xl mx-auto rounded-xl overflow-hidden shadow-2xl shadow-primary/20">
+          {/* Animated Background - High Visibility Gradient */}
+          <div className="absolute inset-0 z-0 bg-gradient-to-r from-cyan-600 via-blue-600 to-purple-600 bg-[length:200%_200%] animate-gradient opacity-100 shadow-md" />
 
-  <span className="font-display font-bold text-xl text-foreground group-hover:text-primary transition-colors">
-    RANDER<span className="text-primary">.AI</span>
-  </span>
-</Link>
+          {/* Animated Border Glow */}
+          <div className="absolute inset-0 z-0 p-[1px] bg-gradient-to-r from-transparent via-white/50 to-transparent bg-[length:200%_200%] animate-[shimmer_3s_infinite] pointer-events-none rounded-xl" style={{ mask: 'linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)', maskComposite: 'exclude' }}></div>
 
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center gap-8">
-            {navLinks.map((link) => (
-              <Link
-                key={link.path}
-                to={link.path}
-                className={`relative font-medium text-sm transition-colors ${
-                  location.pathname === link.path
-                    ? "text-primary"
-                    : "text-muted-foreground hover:text-foreground"
-                }`}
-              >
-                {link.name}
-                {location.pathname === link.path && (
-                  <div className="absolute -bottom-1 left-0 right-0 h-0.5 bg-primary rounded-full" />
-                )}
-              </Link>
-            ))}
+          <div className="relative z-10 flex items-center justify-between w-full text-white">
+            {/* Logo */}
+            <Link to="/" className="flex items-center gap-2 group">
+              <div className="w-10 h-10 rounded-lg bg-white/10 backdrop-blur-sm flex items-center justify-center shadow-lg overflow-hidden border border-white/20 group-hover:bg-white/20 transition-colors">
+                <img
+                  src="/imgg/logo.png"
+                  alt="Rander AI Logo"
+                  className="w-full h-full object-contain p-1"
+                />
+              </div>
+
+              <span className="font-display font-bold text-xl text-white group-hover:text-cyan-100 transition-colors">
+                RANDER.AI
+              </span>
+            </Link>
+
+            {/* Desktop Navigation */}
+            <div className="hidden md:flex items-center gap-8">
+              {navLinks.map((link) => (
+                <Link
+                  key={link.path}
+                  to={link.path}
+                  className={`relative font-medium text-sm transition-colors ${location.pathname === link.path
+                    ? "text-white font-bold"
+                    : "text-blue-100 hover:text-white"
+                    }`}
+                >
+                  {link.name}
+                  {location.pathname === link.path && (
+                    <div className="absolute -bottom-1 left-0 right-0 h-0.5 bg-white rounded-full shadow-[0_0_10px_white]" />
+                  )}
+                </Link>
+              ))}
+            </div>
+
+            {/* CTA Button */}
+            <div className="hidden md:block">
+              {/* Using a custom variant style directly since we want it to pop against the blue header */}
+              <Button className="bg-white text-blue-600 hover:bg-blue-50 hover:text-blue-700 font-bold shadow-lg" size="sm" asChild>
+                <Link to="/contact">Get Started</Link>
+              </Button>
+            </div>
+
+            {/* Mobile Menu Button */}
+            <button
+              className="md:hidden text-white p-2 hover:bg-white/10 rounded-lg transition-colors"
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            >
+              {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+            </button>
           </div>
-
-          {/* CTA Button */}
-          <div className="hidden md:block">
-            <Button variant="hero" size="sm" asChild>
-              <Link to="/contact">Get Started</Link>
-            </Button>
-          </div>
-
-          {/* Mobile Menu Button */}
-          <button
-            className="md:hidden text-foreground p-2"
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          >
-            {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
-          </button>
         </nav>
       </div>
 
@@ -79,11 +88,10 @@ const Header = () => {
                 key={link.path}
                 to={link.path}
                 onClick={() => setMobileMenuOpen(false)}
-                className={`font-medium py-2 px-4 rounded-lg transition-colors ${
-                  location.pathname === link.path
-                    ? "bg-primary/10 text-primary"
-                    : "text-muted-foreground hover:bg-muted hover:text-foreground"
-                }`}
+                className={`font-medium py-2 px-4 rounded-lg transition-colors ${location.pathname === link.path
+                  ? "bg-primary/10 text-primary"
+                  : "text-muted-foreground hover:bg-muted hover:text-foreground"
+                  }`}
               >
                 {link.name}
               </Link>

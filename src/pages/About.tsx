@@ -1,4 +1,11 @@
 import { Users, Target, Lightbulb } from "lucide-react";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
 
 const teamMembers = [
   {
@@ -88,26 +95,44 @@ const About = () => {
           </p>
         </div>
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
-          {teamMembers.map((member, index) => (
-            <div
-              key={member.name}
-              className="glass-card p-8 text-center group hover:border-primary/30 transition-all duration-300 animate-fade-in"
-              style={{ animationDelay: `${0.1 * index + 0.3}s` }}
-            >
-              <div className={`w-24 h-24 rounded-2xl bg-gradient-to-br ${member.color} flex items-center justify-center mx-auto mb-6 shadow-lg group-hover:scale-105 transition-transform duration-300`}>
-                <span className="text-3xl font-display font-bold text-primary-foreground">
-                  {member.name.charAt(0)}
-                </span>
-              </div>
-              <h3 className="font-display text-xl font-bold text-foreground mb-2">
-                {member.name}
-              </h3>
-              <p className="text-sm text-primary font-medium">
-                {member.role}
-              </p>
-            </div>
-          ))}
+        <div className="flex justify-center w-full px-12">
+          <Carousel
+            opts={{
+              align: "start",
+              loop: true,
+            }}
+            className="w-full max-w-5xl"
+          >
+            <CarouselContent className="-ml-4">
+              {teamMembers.map((member, index) => (
+                <CarouselItem key={member.name} className="pl-4 md:basis-1/2 lg:basis-1/3">
+                  <div className="glass-card p-8 text-center group hover:border-primary/30 transition-all duration-300 h-full flex flex-col items-center justify-center relative overflow-hidden min-h-[320px]">
+
+                    {/* Glowing Background Effect on Hover */}
+                    <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+
+                    <div className={`relative z-10 w-32 h-32 rounded-full p-1 bg-gradient-to-br ${member.color} mx-auto mb-6 shadow-xl group-hover:scale-110 transition-transform duration-300`}>
+                      <div className="w-full h-full rounded-full bg-background/90 backdrop-blur-sm flex items-center justify-center overflow-hidden border-4 border-transparent">
+                        <span className="text-4xl font-display font-bold text-transparent bg-clip-text bg-gradient-to-br from-primary to-accent">
+                          {member.name.charAt(0)}
+                        </span>
+                      </div>
+                    </div>
+
+                    <h3 className="relative z-10 font-display text-2xl font-bold text-foreground mb-2 group-hover:text-primary transition-colors">
+                      {member.name}
+                    </h3>
+
+                    <p className="relative z-10 text-base text-muted-foreground font-medium px-3 py-1 rounded-full bg-primary/5 border border-primary/10">
+                      {member.role}
+                    </p>
+                  </div>
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+            <CarouselPrevious className="hidden md:flex -left-12 bg-background/80 hover:bg-primary hover:text-white border-primary/20" />
+            <CarouselNext className="hidden md:flex -right-12 bg-background/80 hover:bg-primary hover:text-white border-primary/20" />
+          </Carousel>
         </div>
       </div>
     </div>

@@ -1,5 +1,8 @@
 import express from "express";
 import fetch from "node-fetch";
+import fs from "fs";
+import path from "path";
+import { fileURLToPath } from "url";
 
 // Environment variables are read from process.env by the runtime.
 // Ensure RESEND_API_KEY (and other secrets) are set in your environment or your host platform.
@@ -25,7 +28,7 @@ app.post("/api/send-email", async (req, res) => {
     // Build email payload
     const payload = {
       from: "no-reply@rander.ai",
-      to: "hello@rander.ai",
+      to: "connect@randerai.in",
       subject: `New contact from ${name} <${email}>`,
       html: `<p><strong>Name:</strong> ${name}</p>
                <p><strong>Email:</strong> ${email}</p>
@@ -56,6 +59,56 @@ app.post("/api/send-email", async (req, res) => {
     console.error('[/api/send-email] error:', err);
     res.status(500).json({ ok: false, error: "Server error" });
   }
+});
+
+// Fix for __dirname in ES modules
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+const TESTIMONIALS_FILE = path.join(__dirname, "testimonials.json");
+
+// Helper to read testimonials
+const readTestimonials = () => {
+  if (!fs.existsSync(TESTIMONIALS_FILE)) return [];
+  try {
+    const data = fs.readFileSync(TESTIMONIALS_FILE, "utf-8");
+    return JSON.parse(data);
+  } catch (err) {
+    console.error("Error reading testimonials file:", err);
+    return [];
+  }
+};
+
+// Helper to write testimonials
+const writeTestimonials = (data) => {
+  fs.writeFileSync(TESTIMONIALS_FILE, JSON.stringify(data, null, 2));
+};
+
+app.get("/api/testimonials", (req, res) => {
+  const testimonials = readTestimonials();
+  res.json(testimonials);
+});
+
+app.post("/api/testimonials", (req, res) => {
+  const { name, rating, feedback } = req.body;
+
+  if (!name || !rating || !feedback) {
+    return res.status(400).json({ ok: false, error: "Missing required fields" });
+  }
+
+  const testimonials = readTestimonials();
+  const newTestimonial = {
+    id: Date.now().toString(),
+    name,
+    rating: Number(rating),
+    feedback,
+    date: new Date().toISOString()
+  };
+
+  testimonials.push(newTestimonial);
+  writeTestimonials(testimonials);
+
+  res.json({ ok: true, testimonial: newTestimonial });
 });
 
 app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));
