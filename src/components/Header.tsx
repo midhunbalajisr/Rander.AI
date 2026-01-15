@@ -30,14 +30,14 @@ const Header = () => {
         <nav className={`relative px-4 md:px-6 py-3 md:py-4 flex items-center justify-between max-w-7xl mx-auto rounded-2xl overflow-hidden transition-all duration-500 ${scrolled ? "shadow-glow bg-black/40 backdrop-blur-xl border border-white/20" : "bg-transparent"
           }`}>
 
-          {/* Merely Animated Background - Aurora Effect */}
-          <div className={`absolute inset-0 z-0 bg-[#020617] transition-opacity duration-700 ${scrolled ? "opacity-100" : "opacity-0"}`} />
+          {/* Animated Deep Premium Background */}
+          <div className={`absolute inset-0 z-0 bg-gradient-to-r from-slate-950 via-[#0b1021] to-slate-950 bg-[length:200%_200%] animate-gradient transition-opacity duration-700 ${scrolled ? "opacity-100" : "opacity-0"}`} />
 
-          {/* Float Particles Overlay */}
-          <div className="absolute inset-0 z-0 opacity-[0.03] bg-[url('https://grainy-gradients.vercel.app/noise.svg')] pointer-events-none" />
+          {/* Subtle Noise Texture */}
+          <div className="absolute inset-0 z-0 opacity-[0.04] bg-[url('https://grainy-gradients.vercel.app/noise.svg')] pointer-events-none" />
 
-          {/* Glass Gloss */}
-          <div className={`absolute inset-0 z-0 bg-gradient-to-b from-white/10 to-transparent pointer-events-none transition-opacity duration-500 ${scrolled ? "opacity-100" : "opacity-0"}`} />
+          {/* Glass Highlight */}
+          <div className={`absolute inset-0 z-0 bg-gradient-to-b from-white/5 to-transparent pointer-events-none transition-opacity duration-500 ${scrolled ? "opacity-100" : "opacity-0"}`} />
 
           <div className="relative z-10 flex items-center justify-between w-full text-white">
             {/* Logo */}
@@ -55,21 +55,19 @@ const Header = () => {
               </span>
             </Link>
 
-            {/* Desktop Navigation - Merely Animated */}
-            <div className="hidden md:flex items-center gap-8">
+            {/* Desktop Navigation - Button Style */}
+            <div className="hidden md:flex items-center gap-2">
               {navLinks.map((link) => (
-                <Link
+                <Button
                   key={link.path}
-                  to={link.path}
-                  className={`relative font-medium text-sm transition-all duration-300 group ${location.pathname === link.path
-                    ? "text-white font-bold scale-110"
-                    : "text-blue-100/80 hover:text-white hover:scale-110"
-                    }`}
+                  variant="ghost"
+                  asChild
+                  className={`rounded-full px-5 font-medium transition-all duration-300 ${location.pathname === link.path
+                    ? "bg-white/15 text-white shadow-[inset_0_0_10px_rgba(255,255,255,0.1)] border border-white/20"
+                    : "text-white/70 hover:bg-white/10 hover:text-white"}`}
                 >
-                  {link.name}
-                  {/* Merrily Growing Underline */}
-                  <span className={`absolute -bottom-1 left-0 right-0 h-0.5 rounded-full transition-all duration-300 ${location.pathname === link.path ? "w-full bg-gradient-to-r from-cyan-400 to-purple-400 shadow-[0_0_10px_rgba(34,211,238,0.8)]" : "w-0 bg-white/50 group-hover:w-full"}`} />
-                </Link>
+                  <Link to={link.path}>{link.name}</Link>
+                </Button>
               ))}
             </div>
 
