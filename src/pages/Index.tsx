@@ -21,16 +21,24 @@ const Index = () => {
             </span>
           </div>
 
-          <h1 
+          <h1
             className="font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold leading-tight mb-6 animate-fade-in"
             style={{ animationDelay: "0.2s" }}
           >
             AI That Understands
             <br />
-            <span className="text-gradient glow-text">Errors Like Humans</span>
+            <span className="inline-flex flex-wrap justify-center items-center gap-x-3 gap-y-2">
+              <span className="group relative cursor-pointer inline-flex items-center justify-center align-middle" aria-label="Errors">
+                <span className="text-red-400 font-mono text-3xl md:text-5xl border-2 border-red-500/30 rounded-full w-12 h-12 md:w-16 md:h-16 flex items-center justify-center transition-all duration-500 ease-out group-hover:w-[180px] group-hover:bg-red-950/30 group-hover:border-red-500">
+                  <span className="group-hover:hidden animate-pulse">!</span>
+                  <span className="hidden group-hover:inline-block text-2xl md:text-3xl font-bold tracking-wider text-red-100 animate-fade-in">ERRORS</span>
+                </span>
+              </span>
+              <span className="text-gradient glow-text">Like Humans</span>
+            </span>
           </h1>
 
-          <p 
+          <p
             className="text-lg sm:text-xl text-muted-foreground max-w-2xl mx-auto mb-8 animate-fade-in"
             style={{ animationDelay: "0.3s" }}
           >
@@ -38,7 +46,7 @@ const Index = () => {
             detects, analyzes, and fixes bugs & errors in applications and products.
           </p>
 
-          <div 
+          <div
             className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16 animate-fade-in"
             style={{ animationDelay: "0.4s" }}
           >
@@ -52,7 +60,7 @@ const Index = () => {
             </Button>
           </div>
 
-          <div 
+          <div
             className="glass-card p-6 sm:p-8 max-w-2xl mx-auto animate-fade-in"
             style={{ animationDelay: "0.5s" }}
           >

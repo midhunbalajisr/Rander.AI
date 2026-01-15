@@ -31,13 +31,13 @@ const Header = () => {
           }`}>
 
           {/* Merely Animated Background - Aurora Effect */}
-          <div className={`absolute inset-0 z-0 bg-gradient-to-r from-violet-500 via-fuchsia-500 to-cyan-500 bg-[length:400%_400%] animate-gradient opacity-90 transition-opacity duration-700 ${scrolled ? "opacity-95" : "opacity-30"}`} />
+          <div className={`absolute inset-0 z-0 bg-[#020617] transition-opacity duration-700 ${scrolled ? "opacity-100" : "opacity-0"}`} />
 
           {/* Float Particles Overlay */}
-          <div className="absolute inset-0 z-0 opacity-20 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-white via-transparent to-transparent animate-pulse-slow" />
+          <div className="absolute inset-0 z-0 opacity-[0.03] bg-[url('https://grainy-gradients.vercel.app/noise.svg')] pointer-events-none" />
 
           {/* Glass Gloss */}
-          <div className={`absolute inset-0 z-0 bg-gradient-to-b from-white/20 to-transparent pointer-events-none transition-opacity duration-500 ${scrolled ? "opacity-20" : "opacity-40"}`} />
+          <div className={`absolute inset-0 z-0 bg-gradient-to-b from-white/10 to-transparent pointer-events-none transition-opacity duration-500 ${scrolled ? "opacity-100" : "opacity-0"}`} />
 
           <div className="relative z-10 flex items-center justify-between w-full text-white">
             {/* Logo */}
