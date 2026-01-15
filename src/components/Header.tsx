@@ -31,7 +31,7 @@ const Header = () => {
           }`}>
 
           {/* Animated Deep Premium Background */}
-          <div className={`absolute inset-0 z-0 bg-gradient-to-r from-slate-950 via-[#0b1021] to-slate-950 bg-[length:200%_200%] animate-gradient transition-opacity duration-700 ${scrolled ? "opacity-100" : "opacity-0"}`} />
+          <div className={`absolute inset-0 z-0 bg-gradient-to-r from-cyan-400 via-blue-500 to-violet-500 bg-[length:200%_200%] animate-gradient transition-opacity duration-700 ${scrolled ? "opacity-95" : "opacity-85"}`} />
 
           {/* Subtle Noise Texture */}
           <div className="absolute inset-0 z-0 opacity-[0.04] bg-[url('https://grainy-gradients.vercel.app/noise.svg')] pointer-events-none" />
@@ -50,8 +50,8 @@ const Header = () => {
                 />
               </div>
 
-              <span className="font-display font-bold text-xl text-white group-hover:text-cyan-200 transition-colors drop-shadow-md">
-                RANDER.AI
+              <span className="font-display font-extrabold text-xl md:text-2xl tracking-tight text-white group-hover:text-cyan-200 transition-colors drop-shadow-lg">
+                RANDER<span className="text-red-500">.AI</span>
               </span>
             </Link>
 
@@ -62,9 +62,9 @@ const Header = () => {
                   key={link.path}
                   variant="ghost"
                   asChild
-                  className={`rounded-full px-5 font-medium transition-all duration-300 ${location.pathname === link.path
+                  className={`rounded-full px-5 font-bold text-base transition-all duration-300 ${location.pathname === link.path
                     ? "bg-white/15 text-white shadow-[inset_0_0_10px_rgba(255,255,255,0.1)] border border-white/20"
-                    : "text-white/70 hover:bg-white/10 hover:text-white"}`}
+                    : "text-white/80 hover:bg-white/10 hover:text-white"}`}
                 >
                   <Link to={link.path}>{link.name}</Link>
                 </Button>
@@ -75,7 +75,7 @@ const Header = () => {
             <div className="hidden md:block">
               <Button
                 variant="default"
-                className="bg-white text-blue-600 hover:bg-white/90 hover:text-blue-700 font-bold shadow-lg shadow-cyan-500/30 relative overflow-hidden group/btn hover:-translate-y-1 hover:scale-105 transition-all duration-300 border-none px-6"
+                className="bg-white text-blue-600 hover:bg-white/90 hover:text-blue-700 font-extrabold text-base shadow-lg shadow-cyan-500/30 relative overflow-hidden group/btn hover:-translate-y-1 hover:scale-105 transition-all duration-300 border-none px-6"
                 size="sm"
                 asChild
               >

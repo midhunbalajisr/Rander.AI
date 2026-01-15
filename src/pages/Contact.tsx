@@ -54,7 +54,7 @@ const Contact = () => {
             Get in Touch
           </span>
           <h1 className="font-display text-4xl sm:text-5xl md:text-6xl font-extrabold mb-6">
-            Connect With <span className="text-gradient">RANDER.AI</span>
+            Connect With <span className="text-gradient">RANDER<span className="text-red-500">.AI</span></span>
           </h1>
           <p className="text-lg text-muted-foreground max-w-xl mx-auto">
             Have a project in mind? We'd love to hear from you. Send us a message and we'll respond as soon as possible.

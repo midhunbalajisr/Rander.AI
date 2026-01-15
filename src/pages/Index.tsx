@@ -42,7 +42,7 @@ const Index = () => {
             className="text-lg sm:text-xl text-muted-foreground max-w-2xl mx-auto mb-8 animate-fade-in"
             style={{ animationDelay: "0.3s" }}
           >
-            RANDER.AI is an intelligent LLM-powered platform that automatically
+            RANDER<span className="text-red-500">.AI</span> is an intelligent LLM-powered platform that automatically
             detects, analyzes, and fixes bugs & errors in applications and products.
           </p>
 
@@ -67,7 +67,7 @@ const Index = () => {
             <p className="text-lg sm:text-xl italic text-foreground/90 font-display">
               "Every error is an opportunity to build something better."
             </p>
-            <p className="text-sm text-muted-foreground mt-3">— RANDER.AI Philosophy</p>
+            <p className="text-sm text-muted-foreground mt-3">— RANDER<span className="text-red-500">.AI</span> Philosophy</p>
           </div>
         </div>
 
@@ -117,7 +117,7 @@ const Index = () => {
               </div>
               <div>
                 <h3 className="font-display text-2xl sm:text-3xl font-bold mb-3">
-                  The RANDER.AI Solution
+                  The RANDER<span className="text-red-500">.AI</span> Solution
                 </h3>
                 <p className="text-lg text-muted-foreground">
                   Our AI scans, understands, and resolves issues automatically

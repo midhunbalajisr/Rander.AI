@@ -54,11 +54,11 @@ const Services = () => {
               <div className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${service.color} flex items-center justify-center mb-6 shadow-lg shadow-primary/20 group-hover:scale-105 transition-transform duration-300`}>
                 <service.icon className="w-8 h-8 text-primary-foreground" />
               </div>
-              
+
               <h3 className="font-display text-2xl font-bold text-foreground mb-4">
                 {service.title}
               </h3>
-              
+
               <p className="text-muted-foreground mb-6 flex-grow">
                 {service.description}
               </p>
@@ -89,7 +89,7 @@ const Services = () => {
               Ready to Transform Your Workflow?
             </h2>
             <p className="text-muted-foreground mb-8 max-w-xl mx-auto">
-              Let's discuss how RANDER.AI can help streamline your development process and eliminate debugging headaches.
+              Let's discuss how RANDER<span className="text-red-500">.AI</span> can help streamline your development process and eliminate debugging headaches.
             </p>
             <Button variant="hero" size="xl" asChild>
               <Link to="/contact">
@@ -99,7 +99,7 @@ const Services = () => {
           </div>
         </div>
       </div>
-    </div>
+    </div >
   );
 };
 
