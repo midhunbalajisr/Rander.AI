@@ -10,6 +10,33 @@ import { fileURLToPath } from "url";
 const app = express();
 app.use(express.json());
 
+// CORS configuration for production
+app.use((req, res, next) => {
+  // Allow requests from any origin (you can restrict this to your frontend domain)
+  const allowedOrigins = [
+    'http://localhost:8080',
+    'http://localhost:5173',
+    'https://randerai.in',
+    'https://www.randerai.in',
+    'https://rander-ai.vercel.app'
+  ];
+
+  const origin = req.headers.origin;
+  if (allowedOrigins.includes(origin)) {
+    res.setHeader('Access-Control-Allow-Origin', origin);
+  }
+
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+
+  // Handle preflight requests
+  if (req.method === 'OPTIONS') {
+    return res.sendStatus(200);
+  }
+
+  next();
+});
+
 const PORT = process.env.PORT || 3001;
 
 app.post("/api/send-email", async (req, res) => {

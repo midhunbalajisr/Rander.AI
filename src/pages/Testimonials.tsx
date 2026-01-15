@@ -5,6 +5,7 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea"; // Assuming this exists or I'll use standard textarea
 import { useToast } from "@/hooks/use-toast";
 import { Star, User } from "lucide-react";
+import { API_BASE_URL } from "@/config";
 
 interface Testimonial {
     id: string;
@@ -32,7 +33,7 @@ const Testimonials = () => {
 
     const fetchTestimonials = async () => {
         try {
-            const res = await fetch("/api/testimonials");
+            const res = await fetch(`${API_BASE_URL}/api/testimonials`);
             if (res.ok) {
                 const data = await res.json();
                 setTestimonials(data);
@@ -49,7 +50,7 @@ const Testimonials = () => {
         setIsSubmitting(true);
 
         try {
-            const res = await fetch("/api/testimonials", {
+            const res = await fetch(`${API_BASE_URL}/api/testimonials`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(formData),
@@ -152,7 +153,7 @@ const Testimonials = () => {
                                 <Button
                                     type="submit"
                                     variant="hero"
-                                    className="w-full"
+                                    className="w-full animate-fade-in-up"
                                     disabled={isSubmitting}
                                 >
                                     {isSubmitting ? "Submitting..." : "Submit Feedback"}
