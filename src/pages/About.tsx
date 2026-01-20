@@ -10,20 +10,31 @@ import {
 const teamMembers = [
   {
     name: "Midhunbalaji S",
-    role: "Founder & CBA",
+    role: "Founder & CEO",
     color: "from-blue-500 to-cyan-500",
     image: "/team/midhunbalaji.png",
   },
   {
     name: "Arivumathi",
-    role: "CTO & CEO",
-    color: "from-red-500 to-orange-500",
+    role: "CTO",
+    color: "from-red-700 to-orange-300",
     image: "/team/arivumathin.png",
   },
   {
     name: "Ajay S",
-    role: "CEO",
+    role: "CIO",
     color: "from-purple-500 to-pink-500",
+    image: "/team/ajay.png",
+  },
+  {
+    name: "Subash Chandrabose",
+    color: "from-green-500 to-emerald-500",
+    image: "/team/subash.png",
+  },
+  {
+    name: "Philips Vincent",
+    color: "from-indigo-500 to-purple-500",
+    image: "/team/philips.png",
   },
 ];
 
@@ -134,14 +145,14 @@ const About = () => {
               <Carousel
                 opts={{
                   align: "start",
-                  loop: true,
+                  loop: false,
                 }}
                 className="w-full max-w-5xl"
               >
                 <CarouselContent className="-ml-4">
                   {teamMembers.map((member, index) => (
                     <CarouselItem key={member.name} className="pl-4 md:basis-1/2 lg:basis-1/3">
-                      <div className="relative p-8 text-center group transition-all duration-300 h-full flex flex-col items-center justify-center overflow-hidden min-h-[380px] rounded-2xl border-2 border-white/10">
+                      <div className="relative p-6 text-center group transition-all duration-300 h-full flex flex-col items-center justify-center overflow-hidden min-h-[300px] rounded-2xl border-2 border-white/10">
 
                         {/* Vibrant Animated Background */}
                         <div className={`absolute inset-0 bg-gradient-to-br ${member.color} opacity-90 animate-gradient bg-[length:200%_200%]`} />
@@ -150,7 +161,7 @@ const About = () => {
                         <div className="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent animate-pulse-slow" />
 
                         {/* Photo or Initial */}
-                        <div className={`relative z-10 w-32 h-32 rounded-full p-1 bg-white mx-auto mb-6 shadow-2xl group-hover:scale-110 transition-transform duration-300`}>
+                        <div className={`relative z-10 w-24 h-24 rounded-full p-1 bg-white mx-auto mb-4 shadow-2xl group-hover:scale-110 transition-transform duration-300`}>
                           <div className="w-full h-full rounded-full overflow-hidden border-4 border-white/20">
                             {member.image ? (
                               <img
@@ -160,7 +171,7 @@ const About = () => {
                               />
                             ) : (
                               <div className="w-full h-full bg-gradient-to-br from-slate-800 to-slate-900 flex items-center justify-center">
-                                <span className="text-4xl font-display font-bold text-white">
+                                <span className="text-3xl font-display font-bold text-white">
                                   {member.name.charAt(0)}
                                 </span>
                               </div>
@@ -168,16 +179,18 @@ const About = () => {
                           </div>
                         </div>
 
-                        <h3 className="relative z-10 font-display text-xl md:text-2xl font-extrabold mb-3 drop-shadow-lg bg-gradient-to-r from-blue-900 via-purple-900 to-indigo-900 bg-clip-text text-transparent whitespace-nowrap">
+                        <h3 className="relative z-10 font-display text-lg md:text-xl font-extrabold mb-3 drop-shadow-lg bg-gradient-to-r from-blue-900 via-purple-900 to-indigo-900 bg-clip-text text-transparent px-2 leading-tight text-center">
                           {member.name}
                         </h3>
 
-                        <div className="relative z-10 inline-block">
-                          <div className="absolute inset-0 bg-yellow-400/30 blur-lg animate-pulse-slow" />
-                          <p className="relative text-base md:text-lg text-white font-bold px-5 py-2.5 rounded-full bg-gradient-to-r from-orange-500/80 to-red-500/80 backdrop-blur-sm border-2 border-yellow-400/50 shadow-xl shadow-orange-500/50">
-                            {member.role}
-                          </p>
-                        </div>
+                        {member.role && (
+                          <div className="relative z-10 inline-block">
+                            <div className="absolute inset-0 bg-yellow-400/30 blur-lg animate-pulse-slow" />
+                            <p className="relative text-sm md:text-base text-white font-bold px-4 py-2 rounded-full bg-gradient-to-r from-orange-500/80 to-red-500/80 backdrop-blur-sm border-2 border-yellow-400/50 shadow-xl shadow-orange-500/50">
+                              {member.role}
+                            </p>
+                          </div>
+                        )}
                       </div>
                     </CarouselItem>
                   ))}
