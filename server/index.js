@@ -1,11 +1,15 @@
 import express from "express";
 import fetch from "node-fetch";
+import { Resend } from "resend";
 import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
 
 // Environment variables are read from process.env by the runtime.
 // Ensure RESEND_API_KEY (and other secrets) are set in your environment or your host platform.
+
+// Initialize Resend SDK
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 const app = express();
 app.use(express.json());
@@ -38,6 +42,30 @@ app.use((req, res, next) => {
 });
 
 const PORT = process.env.PORT || 3001;
+
+// New Resend SDK endpoint
+app.post("/send-email", async (req, res) => {
+  try {
+    const { name, email, message } = req.body;
+
+    await resend.emails.send({
+      from: "RanderAI <onboarding@resend.dev>",
+      to: ["midhunbalajisr@gmail.com"],
+      subject: "New Contact Message",
+      html: `
+        <h3>New Message</h3>
+        <p><b>Name:</b> ${name}</p>
+        <p><b>Email:</b> ${email}</p>
+        <p><b>Message:</b> ${message}</p>
+      `,
+    });
+
+    res.status(200).json({ success: true, message: "Email sent successfully" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ success: false, message: "Email failed" });
+  }
+});
 
 app.post("/api/send-email", async (req, res) => {
   const { name, email, phone, city } = req.body;

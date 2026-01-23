@@ -127,10 +127,13 @@ const Testimonials = () => {
                                                 key={star}
                                                 type="button"
                                                 onClick={() => handleRatingChange(star)}
-                                                className={`transition-all hover:scale-110 ${star <= formData.rating ? "text-yellow-400 fill-yellow-400" : "text-gray-400"
+                                                className={`transition-all duration-200 hover:scale-125 hover:brightness-110 cursor-pointer ${star <= formData.rating ? "text-yellow-400" : "text-gray-400"
                                                     }`}
                                             >
-                                                <Star className="w-8 h-8" />
+                                                <Star
+                                                    className="w-8 h-8"
+                                                    fill={star <= formData.rating ? "currentColor" : "none"}
+                                                />
                                             </button>
                                         ))}
                                     </div>
@@ -152,11 +155,11 @@ const Testimonials = () => {
 
                                 <Button
                                     type="submit"
-                                    variant="hero"
-                                    className="w-full animate-fade-in-up"
+                                    className="w-full relative overflow-hidden bg-gradient-to-r from-primary via-cyan-500 to-blue-500 hover:from-primary hover:via-cyan-400 hover:to-blue-400 text-white font-bold py-6 rounded-lg shadow-lg hover:shadow-2xl hover:shadow-primary/50 transition-all duration-300 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 border-2 border-white/20"
                                     disabled={isSubmitting}
                                 >
-                                    {isSubmitting ? "Submitting..." : "Submit Feedback"}
+                                    <span className="relative z-10">{isSubmitting ? "Submitting..." : "Submit Feedback"}</span>
+                                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-in-out" />
                                 </Button>
                             </form>
                         </div>

@@ -13,6 +13,7 @@ const teamMembers = [
     role: "Founder & CEO",
     color: "from-blue-500 to-cyan-500",
     image: "/team/midhunbalaji.png",
+    isFounder: true,
   },
   {
     name: "Arivumathi",
@@ -151,45 +152,116 @@ const About = () => {
               >
                 <CarouselContent className="-ml-4">
                   {teamMembers.map((member, index) => (
-                    <CarouselItem key={member.name} className="pl-4 md:basis-1/2 lg:basis-1/3">
-                      <div className="relative p-6 text-center group transition-all duration-300 h-full flex flex-col items-center justify-center overflow-hidden min-h-[300px] rounded-2xl border-2 border-white/10">
+                    <CarouselItem key={member.name} className={`pl-4 ${member.isFounder ? 'md:basis-full lg:basis-full' : 'md:basis-1/2 lg:basis-1/3'}`}>
+                      <div className={`relative text-center group transition-all duration-300 h-full flex flex-col items-center justify-center overflow-hidden rounded-2xl ${member.isFounder ? 'p-10 min-h-[450px] border-4 border-yellow-400/60 shadow-2xl shadow-yellow-400/40' : 'p-6 min-h-[300px] border-2 border-white/10'}`}>
 
-                        {/* Vibrant Animated Background */}
-                        <div className={`absolute inset-0 bg-gradient-to-br ${member.color} opacity-90 animate-gradient bg-[length:200%_200%]`} />
+                        {member.isFounder ? (
+                          <>
+                            {/* Water Flowing Background for Founder */}
+                            <div className="absolute inset-0 bg-gradient-to-b from-blue-400 via-cyan-500 to-blue-600 opacity-95" />
 
-                        {/* Glowing Pulse Effect */}
-                        <div className="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent animate-pulse-slow" />
+                            {/* Animated Water Waves */}
+                            <div className="absolute inset-0">
+                              <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-blue-700/60 to-transparent animate-pulse-slow" style={{ animationDuration: '3s' }} />
+                              <div className="absolute bottom-10 left-0 right-0 h-40 bg-gradient-to-t from-cyan-600/40 to-transparent animate-pulse-slow" style={{ animationDelay: '1s', animationDuration: '4s' }} />
+                              <div className="absolute bottom-20 left-0 right-0 h-48 bg-gradient-to-t from-blue-500/30 to-transparent animate-pulse-slow" style={{ animationDelay: '2s', animationDuration: '5s' }} />
+                            </div>
 
-                        {/* Photo or Initial */}
-                        <div className={`relative z-10 w-24 h-24 rounded-full p-1 bg-white mx-auto mb-4 shadow-2xl group-hover:scale-110 transition-transform duration-300`}>
-                          <div className="w-full h-full rounded-full overflow-hidden border-4 border-white/20">
-                            {member.image ? (
-                              <img
-                                src={member.image}
-                                alt={member.name}
-                                className="w-full h-full object-cover"
-                              />
-                            ) : (
-                              <div className="w-full h-full bg-gradient-to-br from-slate-800 to-slate-900 flex items-center justify-center">
-                                <span className="text-3xl font-display font-bold text-white">
-                                  {member.name.charAt(0)}
-                                </span>
+                            {/* Water Ripples */}
+                            <div className="absolute inset-0 overflow-hidden">
+                              {Array.from({ length: 15 }).map((_, i) => (
+                                <div
+                                  key={i}
+                                  className="absolute rounded-full border-2 border-white/20"
+                                  style={{
+                                    left: `${Math.random() * 100}%`,
+                                    top: `${Math.random() * 100}%`,
+                                    width: `${20 + Math.random() * 60}px`,
+                                    height: `${20 + Math.random() * 60}px`,
+                                    animation: `ping ${3 + Math.random() * 4}s ease-in-out infinite`,
+                                    animationDelay: `${Math.random() * 3}s`,
+                                  }}
+                                />
+                              ))}
+                            </div>
+
+                            {/* Highlighted Border Glow */}
+                            <div className="absolute inset-0 rounded-2xl border-4 border-yellow-300/40 animate-pulse-slow" />
+
+                            {/* Photo */}
+                            <div className="relative z-10 w-40 h-40 rounded-full p-1 bg-gradient-to-br from-yellow-300 to-yellow-500 mx-auto mb-6 shadow-2xl group-hover:scale-110 transition-transform duration-300">
+                              <div className="w-full h-full rounded-full overflow-hidden border-4 border-white/40">
+                                {member.image ? (
+                                  <img
+                                    src={member.image}
+                                    alt={member.name}
+                                    className="w-full h-full object-cover"
+                                  />
+                                ) : (
+                                  <div className="w-full h-full bg-gradient-to-br from-slate-800 to-slate-900 flex items-center justify-center">
+                                    <span className="text-5xl font-display font-bold text-white">
+                                      {member.name.charAt(0)}
+                                    </span>
+                                  </div>
+                                )}
+                              </div>
+                            </div>
+
+                            {/* Floating Name on Water */}
+                            <h3 className="relative z-10 font-display text-2xl md:text-3xl font-extrabold mb-4 drop-shadow-2xl text-white px-4 leading-tight text-center animate-float">
+                              {member.name}
+                            </h3>
+
+                            {/* Founder Badge */}
+                            {member.role && (
+                              <div className="relative z-10 inline-block">
+                                <div className="absolute inset-0 bg-yellow-300/50 blur-xl animate-pulse-slow" />
+                                <p className="relative text-lg md:text-xl text-white font-extrabold px-6 py-3 rounded-full bg-gradient-to-r from-yellow-500 to-orange-500 backdrop-blur-sm border-3 border-yellow-200/70 shadow-2xl shadow-yellow-500/60">
+                                  ⭐ {member.role} ⭐
+                                </p>
                               </div>
                             )}
-                          </div>
-                        </div>
+                          </>
+                        ) : (
+                          <>
+                            {/* Regular Vibrant Animated Background */}
+                            <div className={`absolute inset-0 bg-gradient-to-br ${member.color} opacity-90 animate-gradient bg-[length:200%_200%]`} />
 
-                        <h3 className="relative z-10 font-display text-lg md:text-xl font-extrabold mb-3 drop-shadow-lg bg-gradient-to-r from-blue-900 via-purple-900 to-indigo-900 bg-clip-text text-transparent px-2 leading-tight text-center">
-                          {member.name}
-                        </h3>
+                            {/* Glowing Pulse Effect */}
+                            <div className="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent animate-pulse-slow" />
 
-                        {member.role && (
-                          <div className="relative z-10 inline-block">
-                            <div className="absolute inset-0 bg-yellow-400/30 blur-lg animate-pulse-slow" />
-                            <p className="relative text-sm md:text-base text-white font-bold px-4 py-2 rounded-full bg-gradient-to-r from-orange-500/80 to-red-500/80 backdrop-blur-sm border-2 border-yellow-400/50 shadow-xl shadow-orange-500/50">
-                              {member.role}
-                            </p>
-                          </div>
+                            {/* Photo or Initial */}
+                            <div className="relative z-10 w-24 h-24 rounded-full p-1 bg-white mx-auto mb-4 shadow-2xl group-hover:scale-110 transition-transform duration-300">
+                              <div className="w-full h-full rounded-full overflow-hidden border-4 border-white/20">
+                                {member.image ? (
+                                  <img
+                                    src={member.image}
+                                    alt={member.name}
+                                    className="w-full h-full object-cover"
+                                  />
+                                ) : (
+                                  <div className="w-full h-full bg-gradient-to-br from-slate-800 to-slate-900 flex items-center justify-center">
+                                    <span className="text-3xl font-display font-bold text-white">
+                                      {member.name.charAt(0)}
+                                    </span>
+                                  </div>
+                                )}
+                              </div>
+                            </div>
+
+                            <h3 className="relative z-10 font-display text-lg md:text-xl font-extrabold mb-3 drop-shadow-lg bg-gradient-to-r from-blue-900 via-purple-900 to-indigo-900 bg-clip-text text-transparent px-2 leading-tight text-center">
+                              {member.name}
+                            </h3>
+
+                            {member.role && (
+                              <div className="relative z-10 inline-block">
+                                <div className="absolute inset-0 bg-yellow-400/30 blur-lg animate-pulse-slow" />
+                                <p className="relative text-sm md:text-base text-white font-bold px-4 py-2 rounded-full bg-gradient-to-r from-orange-500/80 to-red-500/80 backdrop-blur-sm border-2 border-yellow-400/50 shadow-xl shadow-orange-500/50">
+                                  {member.role}
+                                </p>
+                              </div>
+                            )}
+                          </>
                         )}
                       </div>
                     </CarouselItem>
