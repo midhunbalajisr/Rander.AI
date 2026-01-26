@@ -6,8 +6,8 @@ const Footer = () => {
       <div className="max-w-7xl mx-auto px-6 pb-8">
         {/* Designed Footer Box */}
         <div className="relative rounded-3xl overflow-hidden border-2 border-white/10 shadow-2xl">
-          {/* Animated Gradient Background */}
-          <div className="absolute inset-0 bg-gradient-to-r from-purple-600 via-blue-600 to-cyan-600 opacity-90 animate-gradient bg-[length:200%_200%]" />
+          {/* Animated Dark Gradient Background */}
+          <div className="absolute inset-0 bg-gradient-to-r from-green-900 via-pink-900 via-purple-900 to-blue-900 opacity-95 animate-gradient bg-[length:300%_300%]" />
 
           {/* Noise Texture */}
           <div className="absolute inset-0 opacity-[0.05] bg-[url('https://grainy-gradients.vercel.app/noise.svg')]" />
@@ -22,7 +22,7 @@ const Footer = () => {
               <Link to="/" className="flex items-center gap-3 group">
                 <div className="w-12 h-12 rounded-xl bg-white/20 backdrop-blur-md border border-white/30 flex items-center justify-center group-hover:scale-110 transition-transform">
                   <img
-                    src="/imgg/logo.png"
+                    src="/logo.png"
                     alt="RANDER.AI logo"
                     className="w-8 h-8 object-contain"
                   />

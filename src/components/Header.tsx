@@ -30,8 +30,8 @@ const Header = () => {
         <nav className={`relative px-4 md:px-6 py-3 md:py-4 flex items-center justify-between max-w-7xl mx-auto rounded-2xl overflow-hidden transition-all duration-500 ${scrolled ? "shadow-glow bg-black/40 backdrop-blur-xl border border-white/20" : "bg-transparent"
           }`}>
 
-          {/* Animated Deep Premium Background */}
-          <div className={`absolute inset-0 z-0 bg-gradient-to-r from-cyan-400 via-blue-500 to-violet-500 bg-[length:200%_200%] animate-gradient transition-opacity duration-700 ${scrolled ? "opacity-95" : "opacity-85"}`} />
+          {/* Animated Dark Gradient Background */}
+          <div className={`absolute inset-0 z-0 bg-gradient-to-r from-blue-900 via-purple-900 via-pink-900 to-green-900 bg-[length:300%_300%] animate-gradient transition-opacity duration-700 ${scrolled ? "opacity-95" : "opacity-85"}`} />
 
           {/* Subtle Noise Texture */}
           <div className="absolute inset-0 z-0 opacity-[0.04] bg-[url('https://grainy-gradients.vercel.app/noise.svg')] pointer-events-none" />
@@ -44,7 +44,7 @@ const Header = () => {
             <Link to="/" className="flex items-center gap-2 group">
               <div className="w-10 h-10 rounded-lg bg-white/10 backdrop-blur-md flex items-center justify-center shadow-lg overflow-hidden border border-white/20 group-hover:bg-white/20 transition-all duration-300 group-hover:scale-110">
                 <img
-                  src="/imgg/logo.png"
+                  src="/logo.png"
                   alt="Rander AI Logo"
                   className="w-full h-full object-contain p-1"
                 />
