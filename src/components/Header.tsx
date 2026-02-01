@@ -25,19 +25,18 @@ const Header = () => {
   }, []);
 
   return (
-    <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${scrolled ? "py-2" : "py-6"}`}>
+    <header className="fixed top-0 left-0 right-0 z-50 transition-all duration-500 py-4">
       <div className="mx-4">
-        <nav className={`relative px-4 md:px-6 py-3 md:py-4 flex items-center justify-between max-w-7xl mx-auto rounded-2xl overflow-hidden transition-all duration-500 ${scrolled ? "shadow-glow bg-black/40 backdrop-blur-xl border border-white/20" : "bg-transparent"
-          }`}>
+        <nav className="relative px-4 md:px-6 py-3 md:py-4 flex items-center justify-between max-w-7xl mx-auto rounded-2xl overflow-hidden shadow-glow bg-black/40 backdrop-blur-xl border border-white/20">
 
-          {/* Animated Dark Gradient Background */}
-          <div className={`absolute inset-0 z-0 bg-gradient-to-r from-cyan-500 via-purple-500 via-pink-500 to-yellow-500 bg-[length:300%_300%] animate-gradient transition-opacity duration-700 ${scrolled ? "opacity-95" : "opacity-85"}`} />
+          {/* Animated Vibrant Gradient Background */}
+          <div className="absolute inset-0 z-0 bg-gradient-to-r from-cyan-500 via-purple-500 via-pink-500 to-yellow-500 bg-[length:300%_300%] animate-gradient opacity-95" />
 
           {/* Subtle Noise Texture */}
           <div className="absolute inset-0 z-0 opacity-[0.04] bg-[url('https://grainy-gradients.vercel.app/noise.svg')] pointer-events-none" />
 
           {/* Glass Highlight */}
-          <div className={`absolute inset-0 z-0 bg-gradient-to-b from-white/5 to-transparent pointer-events-none transition-opacity duration-500 ${scrolled ? "opacity-100" : "opacity-0"}`} />
+          <div className="absolute inset-0 z-0 bg-gradient-to-b from-white/5 to-transparent pointer-events-none opacity-100" />
 
           <div className="relative z-10 flex items-center justify-between w-full text-white">
             {/* Logo */}
