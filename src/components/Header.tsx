@@ -31,7 +31,7 @@ const Header = () => {
           }`}>
 
           {/* Animated Dark Gradient Background */}
-          <div className={`absolute inset-0 z-0 bg-gradient-to-r from-blue-900 via-purple-900 via-pink-900 to-green-900 bg-[length:300%_300%] animate-gradient transition-opacity duration-700 ${scrolled ? "opacity-95" : "opacity-85"}`} />
+          <div className={`absolute inset-0 z-0 bg-gradient-to-r from-cyan-500 via-purple-500 via-pink-500 to-yellow-500 bg-[length:300%_300%] animate-gradient transition-opacity duration-700 ${scrolled ? "opacity-95" : "opacity-85"}`} />
 
           {/* Subtle Noise Texture */}
           <div className="absolute inset-0 z-0 opacity-[0.04] bg-[url('https://grainy-gradients.vercel.app/noise.svg')] pointer-events-none" />
