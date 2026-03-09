@@ -5,7 +5,8 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea"; // Assuming this exists or I'll use standard textarea
 import { useToast } from "@/hooks/use-toast";
 import { Star, User } from "lucide-react";
-import { API_BASE_URL } from "@/config";
+import { firestore } from "@/lib/firebase";
+import { addDoc, collection, getDocs, orderBy, query, serverTimestamp } from "firebase/firestore";
 
 interface Testimonial {
     id: string;
@@ -20,6 +21,9 @@ const Testimonials = () => {
     const [testimonials, setTestimonials] = useState<Testimonial[]>([]);
     const [isLoading, setIsLoading] = useState(true);
 
+    const filterOutBadNames = (items: Testimonial[]) =>
+        items.filter((t) => t.name !== "jfuahuaoeduj");
+
     const [formData, setFormData] = useState({
         name: "",
         rating: 5,
@@ -33,11 +37,15 @@ const Testimonials = () => {
 
     const fetchTestimonials = async () => {
         try {
-            const res = await fetch(`${API_BASE_URL}/api/testimonials`);
-            if (res.ok) {
-                const data = await res.json();
-                setTestimonials(data);
-            }
+            const q = query(collection(firestore, "testimonials"), orderBy("date", "desc"));
+            const snapshot = await getDocs(q);
+            const items = snapshot.docs
+                .map((doc) => ({
+                    id: doc.id,
+                    ...(doc.data() as any),
+                }))
+                .filter((t) => t.name !== "jfuahuaoeduj");
+            setTestimonials(items as Testimonial[]);
         } catch (err) {
             console.error("Failed to fetch testimonials", err);
         } finally {
@@ -50,23 +58,19 @@ const Testimonials = () => {
         setIsSubmitting(true);
 
         try {
-            const res = await fetch(`${API_BASE_URL}/api/testimonials`, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(formData),
+            await addDoc(collection(firestore, "testimonials"), {
+                name: formData.name,
+                rating: formData.rating,
+                feedback: formData.feedback,
+                date: serverTimestamp(),
             });
 
-            const data = await res.json();
-            if (res.ok && data.ok) {
-                toast({ title: "Feedback received!", description: "Thank you for your feedback." });
-                setFormData({ name: "", rating: 5, feedback: "" });
-                setTestimonials((prev) => [...prev, data.testimonial]);
-            } else {
-                toast({ title: "Error", description: data.error || "Failed to submit feedback." });
-            }
+            toast({ title: "Feedback received!", description: "Thank you for your feedback." });
+            setFormData({ name: "", rating: 5, feedback: "" });
+            await fetchTestimonials();
         } catch (err) {
             console.error(err);
-            toast({ title: "Error", description: "Failed to submit feedback." });
+            toast({ title: "Error", description: (err as any)?.message || "Failed to submit feedback." });
         } finally {
             setIsSubmitting(false);
         }

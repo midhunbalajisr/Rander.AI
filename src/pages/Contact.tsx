@@ -4,6 +4,8 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
 import { Send, Mail, MapPin, Phone } from "lucide-react";
+import { firestore } from "@/lib/firebase";
+import { addDoc, collection, serverTimestamp } from "firebase/firestore";
 
 const Contact = () => {
   const { toast } = useToast();
@@ -20,22 +22,42 @@ const Contact = () => {
     setIsSubmitting(true);
 
     try {
-      const resp = await fetch("/api/send-email", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
+      // Save submission to Firebase Firestore
+      await addDoc(collection(firestore, "contacts"), {
+        name: formData.name,
+        email: formData.email,
+        phone: formData.phone,
+        city: formData.city,
+        createdAt: serverTimestamp(),
       });
 
-      const data = await resp.json();
-      if (resp.ok && data.ok) {
-        toast({ title: "Message sent!", description: "We'll get back to you soon." });
-        setFormData({ name: "", email: "", phone: "", city: "" });
-      } else {
-        toast({ title: "Error", description: data.error || "Failed to send message." });
+      // Show thank-you UI immediately (DB write succeeded)
+      toast({ title: "Thank you!", description: "We'll get back to you soon." });
+      setFormData({ name: "", email: "", phone: "", city: "" });
+
+      // Try sending the email notification, but don't treat failures as fatal for the user flow.
+      try {
+        const resp = await fetch("/api/send-email", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(formData),
+        });
+
+        const text = await resp.text();
+        if (!resp.ok) {
+          console.error("Email send failed", resp.status, resp.statusText, text);
+        }
+      } catch (emailErr) {
+        console.error("Email send error", emailErr);
       }
     } catch (err) {
       console.error(err);
-      toast({ title: "Error", description: "Failed to send message." });
+      toast({
+        title: "Error",
+        description:
+          (err as any)?.message ||
+          (typeof err === "string" ? err : "Failed to send message."),
+      });
     } finally {
       setIsSubmitting(false);
     }
@@ -145,7 +167,7 @@ const Contact = () => {
                     id="phone"
                     name="phone"
                     type="tel"
-                    placeholder="+1 (555) 000-0000"
+                    placeholder="Mobile number"
                     required
                     value={formData.phone}
                     onChange={handleChange}

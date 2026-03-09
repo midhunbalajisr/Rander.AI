@@ -1,3 +1,4 @@
+import "dotenv/config";
 import express from "express";
 import fetch from "node-fetch";
 import { Resend } from "resend";
@@ -145,25 +146,34 @@ app.get("/api/testimonials", (req, res) => {
 });
 
 app.post("/api/testimonials", (req, res) => {
-  const { name, rating, feedback } = req.body;
+  try {
+    const { name, rating, feedback } = req.body;
 
-  if (!name || !rating || !feedback) {
-    return res.status(400).json({ ok: false, error: "Missing required fields" });
+    if (!name || !rating || !feedback) {
+      return res.status(400).json({ ok: false, error: "Missing required fields" });
+    }
+
+    const testimonials = readTestimonials();
+    const newTestimonial = {
+      id: Date.now().toString(),
+      name,
+      rating: Number(rating),
+      feedback,
+      date: new Date().toISOString(),
+    };
+
+    testimonials.push(newTestimonial);
+    writeTestimonials(testimonials);
+
+    res.json({ ok: true, testimonial: newTestimonial });
+  } catch (err) {
+    console.error("[/api/testimonials] error:", err);
+    const errorMsg = err instanceof Error ? err.message : String(err);
+    // In development, return the error message for easier debugging.
+    // In production, avoid leaking internal details.
+    const responseError = process.env.NODE_ENV === "production" ? "Internal server error" : errorMsg;
+    res.status(500).json({ ok: false, error: responseError });
   }
-
-  const testimonials = readTestimonials();
-  const newTestimonial = {
-    id: Date.now().toString(),
-    name,
-    rating: Number(rating),
-    feedback,
-    date: new Date().toISOString()
-  };
-
-  testimonials.push(newTestimonial);
-  writeTestimonials(testimonials);
-
-  res.json({ ok: true, testimonial: newTestimonial });
 });
 
 app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));
