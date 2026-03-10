@@ -1,6 +1,6 @@
 import { Link, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { Menu, X, ArrowRight } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { Button } from "./ui/button";
 
 const navLinks = [
@@ -10,6 +10,28 @@ const navLinks = [
   { name: "Testimonials", path: "/testimonials" },
   { name: "Contact", path: "/contact" },
 ];
+
+const AnimatedHamburger = ({ isOpen }: { isOpen: boolean }) => {
+  return (
+    <div className="w-6 h-6 flex flex-col justify-center items-center gap-1.5">
+      <div
+        className={`w-6 h-0.5 bg-white rounded-full transition-all duration-300 ease-in-out origin-center ${
+          isOpen ? "rotate-45 translate-y-3" : ""
+        }`}
+      />
+      <div
+        className={`w-6 h-0.5 bg-white rounded-full transition-all duration-300 ease-in-out ${
+          isOpen ? "scale-0" : "scale-100"
+        }`}
+      />
+      <div
+        className={`w-6 h-0.5 bg-white rounded-full transition-all duration-300 ease-in-out origin-center ${
+          isOpen ? "-rotate-45 -translate-y-3" : ""
+        }`}
+      />
+    </div>
+  );
+};
 
 const Header = () => {
   const location = useLocation();
@@ -30,7 +52,7 @@ const Header = () => {
         <nav className="relative px-4 md:px-6 py-3 md:py-4 flex items-center justify-between max-w-7xl mx-auto rounded-2xl overflow-hidden shadow-glow bg-black/40 backdrop-blur-xl border border-white/20">
 
           {/* Animated Vibrant Gradient Background */}
-          <div className="absolute inset-0 z-0 bg-gradient-to-r from-cyan-500 via-purple-500 via-pink-500 to-yellow-500 bg-[length:300%_300%] animate-gradient opacity-95" />
+          <div className="absolute inset-0 z-0 bg-gradient-to-r from-cyan-500 via-purple-500 to-pink-500 opacity-95" />
 
           {/* Subtle Noise Texture */}
           <div className="absolute inset-0 z-0 opacity-[0.04] bg-[url('https://grainy-gradients.vercel.app/noise.svg')] pointer-events-none" />
@@ -87,36 +109,53 @@ const Header = () => {
                 </Link>
               </Button>
             </div>
-
-            {/* Mobile Menu Button */}
-            <button
-              className="md:hidden text-white p-2 hover:bg-white/10 rounded-lg transition-colors backdrop-blur-sm"
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            >
-              {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
-            </button>
           </div>
         </nav>
       </div>
 
+      {/* Mobile Menu Button - Outside Header */}
+      <button
+        className="md:hidden fixed top-6 right-6 z-50 text-white p-3 rounded-full bg-transparent border-2 border-white/20 shadow-lg hover:bg-gradient-to-r hover:from-cyan-500/40 hover:to-blue-500/40 hover:border-cyan-400/60 hover:shadow-xl transition-all duration-300 focus:outline-none"
+        onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+        aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
+      >
+        <AnimatedHamburger isOpen={mobileMenuOpen} />
+      </button>
+
       {/* Mobile Menu */}
       {mobileMenuOpen && (
-        <div className="md:hidden mx-4 mt-2 animate-fade-in">
-          <div className="glass-card p-4 flex flex-col gap-4 bg-black/60 backdrop-blur-xl border-white/10">
+        <div className="md:hidden fixed inset-0 bg-black/60 backdrop-blur-sm z-40 flex flex-col items-center justify-center animate-fade-in mt-0">
+          <div className="bg-gradient-to-b from-slate-900 to-black rounded-3xl shadow-2xl p-8 w-4/5 max-w-sm flex flex-col gap-5">
+            <div className="text-center mb-2">
+              <h3 className="text-white text-xl font-bold">Menu</h3>
+            </div>
+            
             {navLinks.map((link) => (
               <Link
                 key={link.path}
                 to={link.path}
                 onClick={() => setMobileMenuOpen(false)}
-                className={`font-medium py-2 px-4 rounded-lg transition-colors ${location.pathname === link.path
-                  ? "bg-white/10 text-white"
-                  : "text-gray-300 hover:bg-white/5 hover:text-white"
-                  }`}
+                className={`flex items-center gap-3 px-6 py-4 rounded-xl font-bold text-lg transition-all duration-300 relative group overflow-hidden ${
+                  location.pathname === link.path
+                    ? "bg-gradient-to-r from-cyan-500 to-blue-600 text-white shadow-lg shadow-cyan-500/30"
+                    : "text-white/70 hover:text-white"
+                }`}
               >
-                {link.name}
+                {/* Transparent background with hover effect */}
+                <div className={`absolute inset-0 rounded-xl transition-all duration-300 z-0 ${
+                  location.pathname === link.path
+                    ? "bg-gradient-to-r from-cyan-500 to-blue-600 shadow-lg shadow-cyan-500/30"
+                    : "bg-gradient-to-r from-cyan-500/0 to-blue-600/0 group-hover:from-cyan-500/40 group-hover:to-blue-600/40 group-hover:shadow-lg group-hover:shadow-cyan-500/20"
+                }`} />
+                <span className="relative z-10">{link.name}</span>
               </Link>
             ))}
-            <Button className="w-full bg-gradient-to-r from-cyan-500 to-blue-600 text-white font-bold border-none" size="default" asChild>
+            
+            <Button 
+              className="w-full bg-transparent text-white font-extrabold text-lg py-6 rounded-xl border-2 border-white/20 transition-all duration-300 hover:bg-gradient-to-r hover:from-yellow-400/40 hover:to-orange-500/40 hover:border-yellow-400/60 hover:shadow-lg hover:shadow-orange-500/20" 
+              size="default" 
+              asChild
+            >
               <Link to="/contact" onClick={() => setMobileMenuOpen(false)}>
                 Get Started
               </Link>

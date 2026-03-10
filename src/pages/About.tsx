@@ -1,4 +1,4 @@
-import { Users, Target, Lightbulb } from "lucide-react";
+import { Users, Target, Lightbulb, Menu, X } from "lucide-react";
 import {
   Carousel,
   CarouselContent,
@@ -39,9 +39,45 @@ const teamMembers = [
   },
 ];
 
+import { useState } from "react";
+
+const mobileMenuButtons = [
+  { label: "Home", href: "/", icon: <Target className="w-5 h-5" /> },
+  { label: "Services", href: "/services", icon: <Lightbulb className="w-5 h-5" /> },
+  { label: "Contact", href: "/contact", icon: <Users className="w-5 h-5" /> },
+];
+
 const About = () => {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   return (
-    <div className="min-h-screen pt-32 pb-20 px-6">
+    <div className="min-h-screen pt-32 pb-20 px-6 relative">
+            {/* Mobile Menu Button */}
+            <button
+              className="md:hidden fixed top-6 right-6 z-50 bg-gradient-to-r from-blue-500 to-cyan-500 p-3 rounded-full shadow-lg transition-all duration-300 focus:outline-none"
+              onClick={() => setMobileMenuOpen((open) => !open)}
+              aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
+            >
+              {mobileMenuOpen ? <X className="w-7 h-7 text-white" /> : <Menu className="w-7 h-7 text-white" />}
+            </button>
+
+            {/* Mobile Menu Overlay */}
+            {mobileMenuOpen && (
+              <div className="md:hidden fixed inset-0 bg-black/60 backdrop-blur-sm z-40 flex flex-col items-center justify-center animate-fade-in">
+                <div className="bg-white rounded-2xl shadow-2xl p-8 w-4/5 max-w-xs flex flex-col gap-6">
+                  {mobileMenuButtons.map((btn) => (
+                    <a
+                      key={btn.label}
+                      href={btn.href}
+                      className="flex items-center gap-3 px-4 py-3 rounded-xl bg-gradient-to-r from-blue-500 to-cyan-500 text-white font-semibold text-lg shadow-md hover:scale-105 transition-transform duration-200"
+                      onClick={() => setMobileMenuOpen(false)}
+                    >
+                      {btn.icon}
+                      {btn.label}
+                    </a>
+                  ))}
+                </div>
+              </div>
+            )}
       {/* Rain effect overlay */}
       <div className="fixed inset-0 pointer-events-none overflow-hidden">
         {Array.from({ length: 20 }).map((_, i) => (
