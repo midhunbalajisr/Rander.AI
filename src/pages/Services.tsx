@@ -1,6 +1,7 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Bug, Cpu, RefreshCw, ArrowRight } from "lucide-react";
+import { Bug, Cpu, RefreshCw, ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
 
 const services = [
   {
@@ -27,58 +28,100 @@ const services = [
 ];
 
 const Services = () => {
+  const [currentSlide, setCurrentSlide] = useState(0);
+
+  const nextSlide = () => {
+    setCurrentSlide((prev) => (prev + 1) % services.length);
+  };
+
+  const prevSlide = () => {
+    setCurrentSlide((prev) => (prev - 1 + services.length) % services.length);
+  };
+
   return (
-    <div className="min-h-screen pt-32 pb-20 px-6">
-      <div className="max-w-6xl mx-auto">
+    <div className="min-h-screen relative">
+      {/* Permanent Full-Screen Fixed Background */}
+      <div className="fixed inset-0 w-full h-full z-[-1] services-bg-pattern pointer-events-none" />
+
+      <div className="pt-32 pb-20 px-6">
+        <div className="max-w-6xl mx-auto relative z-10">
         {/* Header */}
         <div className="text-center mb-20 animate-fade-in">
           <span className="inline-block px-4 py-2 rounded-full text-xs font-semibold bg-primary/10 text-primary border border-primary/20 mb-6">
             What We Offer
           </span>
-          <h1 className="font-display text-4xl sm:text-5xl md:text-6xl font-extrabold mb-6">
+          <h1 className="font-display text-4xl sm:text-5xl md:text-6xl font-extrabold mb-6 text-slate-900">
             Our <span className="text-gradient">Services</span>
           </h1>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+          <p className="text-lg text-slate-700 max-w-2xl mx-auto font-medium">
             Comprehensive AI-powered solutions designed to revolutionize how you handle software maintenance and debugging.
           </p>
         </div>
 
-        {/* Services Grid */}
-        <div className="grid lg:grid-cols-3 gap-8 mb-20">
-          {services.map((service, index) => (
-            <div
-              key={service.title}
-              className="glass-card p-8 group hover:border-primary/30 transition-all duration-300 flex flex-col animate-fade-in"
-              style={{ animationDelay: `${0.1 * index}s` }}
+        {/* Services Carousel */}
+        <div className="motion-carousel mb-20 animate-fade-in">
+          <div className="motion-carousel__viewport">
+            <div 
+              className="motion-carousel__container"
+              style={{ transform: `translateX(-${currentSlide * 100}%)` }}
             >
-              <div className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${service.color} flex items-center justify-center mb-6 shadow-lg shadow-primary/20 group-hover:scale-105 transition-transform duration-300`}>
-                <service.icon className="w-8 h-8 text-primary-foreground" />
-              </div>
+              {services.map((service) => (
+                <div key={service.title} className="motion-carousel__slide flex justify-center py-8">
+                  <div className="card-3d">
+                    <div className="card-3d-glass" />
+                    <div className="card-3d-bg" />
+                    <div className="card-3d-glow" />
+                    <div className="card-3d-glow-center" />
+                    <div className="card-3d-border" />
 
-              <h3 className="font-display text-2xl font-bold text-foreground mb-4">
-                {service.title}
-              </h3>
+                    <div className="card-3d-content">
+                      <div className="card-3d-icon">
+                        <service.icon className="w-6 h-6 text-white" />
+                      </div>
+                      
+                      <h3 className="card-3d-title">
+                        {service.title}
+                      </h3>
 
-              <p className="text-muted-foreground mb-6 flex-grow">
-                {service.description}
-              </p>
+                      <p className="card-3d-desc">
+                        {service.description}
+                      </p>
 
-              <div className="space-y-2 mb-6">
-                {service.features.map((feature) => (
-                  <div key={feature} className="flex items-center gap-2 text-sm">
-                    <div className="w-1.5 h-1.5 rounded-full bg-primary" />
-                    <span className="text-foreground/80">{feature}</span>
+                      <div className="space-y-2 mb-6 flex-grow">
+                        {service.features.map((feature) => (
+                          <div key={feature} className="flex items-center gap-2 text-sm text-[#ccc]">
+                            <div className="w-1.5 h-1.5 rounded-full shadow-[0_0_8px_white] bg-white opacity-80" />
+                            <span>{feature}</span>
+                          </div>
+                        ))}
+                      </div>
+
+                      <Link to="/contact" className="card-3d-link mt-auto">
+                        Learn More <ArrowRight className="w-4 h-4" />
+                      </Link>
+                    </div>
                   </div>
-                ))}
-              </div>
-
-              <Button variant="glass" className="w-full group-hover:border-primary/50" asChild>
-                <Link to="/contact">
-                  Learn More <ArrowRight className="ml-2 w-4 h-4" />
-                </Link>
-              </Button>
+                </div>
+              ))}
             </div>
-          ))}
+          </div>
+
+          <button className="motion-carousel__button motion-carousel__button--prev flex items-center justify-center p-3 hover:scale-110 transition-transform" onClick={prevSlide}>
+            <ChevronLeft className="w-6 h-6" />
+          </button>
+          <button className="motion-carousel__button motion-carousel__button--next flex items-center justify-center p-3 hover:scale-110 transition-transform" onClick={nextSlide}>
+            <ChevronRight className="w-6 h-6" />
+          </button>
+
+          <div className="motion-carousel__dots">
+            {services.map((_, idx) => (
+              <div
+                key={idx}
+                className={`motion-carousel__dot ${currentSlide === idx ? "motion-carousel__dot--active" : ""}`}
+                onClick={() => setCurrentSlide(idx)}
+              />
+            ))}
+          </div>
         </div>
 
         {/* CTA Section */}
@@ -99,7 +142,8 @@ const Services = () => {
           </div>
         </div>
       </div>
-    </div >
+      </div>
+    </div>
   );
 };
 

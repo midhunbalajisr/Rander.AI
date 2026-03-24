@@ -63,13 +63,11 @@ const Header = () => {
           <div className="relative z-10 flex items-center justify-between w-full text-white">
             {/* Logo */}
             <Link to="/" className="flex items-center gap-2 group">
-              <div className="w-10 h-10 rounded-lg bg-white/10 backdrop-blur-md flex items-center justify-center shadow-lg overflow-hidden border border-white/20 group-hover:bg-white/20 transition-all duration-300 group-hover:scale-110">
-                <img
-                  src="/logo.png"
-                  alt="Rander AI Logo"
-                  className="w-full h-full object-contain p-1"
-                />
-              </div>
+              <img
+                src="/alt logo.png"
+                alt="Rander AI Logo"
+                className="w-12 h-12 object-contain group-hover:scale-110 transition-transform duration-300 drop-shadow-lg"
+              />
 
               <span className="font-display font-extrabold text-xl md:text-2xl tracking-tight text-white group-hover:text-cyan-200 transition-colors drop-shadow-lg">
                 RANDER<span className="text-red-500">.AI</span>
