@@ -4,8 +4,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
 import { Send, Mail, MapPin, Phone } from "lucide-react";
-import { firestore } from "@/lib/firebase";
-import { addDoc, collection, serverTimestamp } from "firebase/firestore";
+import { createContact, sendEmail } from "@/api/contacts";
 
 const Contact = () => {
   const { toast } = useToast();
@@ -22,13 +21,12 @@ const Contact = () => {
     setIsSubmitting(true);
 
     try {
-      // Save submission to Firebase Firestore
-      await addDoc(collection(firestore, "contacts"), {
+      // Save submission to our backend
+      await createContact({
         name: formData.name,
         email: formData.email,
         phone: formData.phone,
         city: formData.city,
-        createdAt: serverTimestamp(),
       });
 
       // Show thank-you UI immediately (DB write succeeded)
@@ -37,26 +35,15 @@ const Contact = () => {
 
       // Try sending the email notification, but don't treat failures as fatal for the user flow.
       try {
-        const resp = await fetch("/api/send-email", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(formData),
-        });
-
-        const text = await resp.text();
-        if (!resp.ok) {
-          console.error("Email send failed", resp.status, resp.statusText, text);
-        }
+        await sendEmail(formData);
       } catch (emailErr) {
         console.error("Email send error", emailErr);
       }
-    } catch (err) {
+    } catch (err: any) {
       console.error(err);
       toast({
         title: "Error",
-        description:
-          (err as any)?.message ||
-          (typeof err === "string" ? err : "Failed to send message."),
+        description: err.response?.data?.error || err.message || "Failed to send message.",
       });
     } finally {
       setIsSubmitting(false);
@@ -71,7 +58,7 @@ const Contact = () => {
     <div className="min-h-screen pt-32 pb-20 px-6">
       <div className="max-w-5xl mx-auto">
         {/* Header */}
-        <div className="text-center mb-16 animate-fade-in">
+        <div className="text-center mb-16">
           <span className="inline-block px-4 py-2 rounded-full text-xs font-semibold bg-primary/10 text-primary border border-primary/20 mb-6">
             Get in Touch
           </span>
@@ -86,7 +73,7 @@ const Contact = () => {
         <div className="grid lg:grid-cols-5 gap-12">
           {/* Contact Info */}
           <div className="lg:col-span-2 space-y-8">
-            <div className="glass-card p-6 animate-fade-in" style={{ animationDelay: "0.1s" }}>
+            <div className="glass-card p-6">
               <div className="flex items-center gap-4">
                 <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center">
                   <Mail className="w-6 h-6 text-primary" />
@@ -102,7 +89,7 @@ const Contact = () => {
               </div>
             </div>
 
-            <div className="glass-card p-6 animate-fade-in" style={{ animationDelay: "0.2s" }}>
+            <div className="glass-card p-6">
               <div className="flex items-center gap-4">
                 <div className="w-12 h-12 rounded-lg bg-accent/10 flex items-center justify-center">
                   <Phone className="w-6 h-6 text-accent" />
@@ -114,7 +101,7 @@ const Contact = () => {
               </div>
             </div>
 
-            <div className="glass-card p-6 animate-fade-in" style={{ animationDelay: "0.3s" }}>
+            <div className="glass-card p-6">
               <div className="flex items-center gap-4">
                 <div className="w-12 h-12 rounded-lg bg-glow-secondary/10 flex items-center justify-center">
                   <MapPin className="w-6 h-6 text-glow-secondary" />
@@ -191,10 +178,8 @@ const Contact = () => {
               </div>
 
               <Button
-                type="submit"
-                variant="hero"
-                size="lg"
-                className="w-full"
+                className="w-full relative overflow-hidden bg-gradient-to-r from-primary via-cyan-500 to-blue-500 hover:from-primary hover:via-cyan-400 hover:to-blue-400 text-white font-bold py-6 rounded-lg shadow-lg hover:shadow-2xl hover:shadow-primary/50 transition-all duration-300 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 border-2 border-white/20"
+
                 disabled={isSubmitting}
               >
                 {isSubmitting ? (

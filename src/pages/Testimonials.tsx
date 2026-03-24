@@ -5,24 +5,20 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea"; // Assuming this exists or I'll use standard textarea
 import { useToast } from "@/hooks/use-toast";
 import { Star, User } from "lucide-react";
-import { firestore } from "@/lib/firebase";
-import { addDoc, collection, getDocs, orderBy, query, serverTimestamp } from "firebase/firestore";
+import { formatDistanceToNow } from "date-fns";
 
-interface Testimonial {
-    id: string;
-    name: string;
-    rating: number;
-    feedback: string;
-    date: string;
-}
+import { getFeedbacks, createFeedback, Feedback } from "@/api/feedbacks";
+import { useInView } from "react-intersection-observer";
 
 const Testimonials = () => {
     const { toast } = useToast();
-    const [testimonials, setTestimonials] = useState<Testimonial[]>([]);
-    const [isLoading, setIsLoading] = useState(true);
+    const [feedbacks, setFeedbacks] = useState<Feedback[]>([]);
+    const [page, setPage] = useState(1);
+    const [hasMore, setHasMore] = useState(true);
+    const [isLoading, setIsLoading] = useState(false);
 
-    const filterOutBadNames = (items: Testimonial[]) =>
-        items.filter((t) => t.name !== "jfuahuaoeduj");
+    // Observer for infinite scroller
+    const { ref, inView } = useInView();
 
     const [formData, setFormData] = useState({
         name: "",
@@ -32,22 +28,51 @@ const Testimonials = () => {
     const [isSubmitting, setIsSubmitting] = useState(false);
 
     useEffect(() => {
-        fetchTestimonials();
+        fetchFeedbacks(1, true);
     }, []);
 
-    const fetchTestimonials = async () => {
+    useEffect(() => {
+        if (inView && hasMore && !isLoading) {
+            fetchFeedbacks(page + 1);
+        }
+    }, [inView, hasMore, isLoading]);
+
+    const fetchFeedbacks = async (pageNum: number, isInitial = false) => {
+        setIsLoading(true);
         try {
-            const q = query(collection(firestore, "testimonials"), orderBy("date", "desc"));
-            const snapshot = await getDocs(q);
-            const items = snapshot.docs
-                .map((doc) => ({
-                    id: doc.id,
-                    ...(doc.data() as any),
-                }))
-                .filter((t) => t.name !== "jfuahuaoeduj");
-            setTestimonials(items as Testimonial[]);
+            const response = await getFeedbacks({ page: pageNum, limit: 10 });
+            console.log("Feedbacks API response:", response);
+
+            // Check if backend returns array or paginated object with common keys
+            let newItems: Feedback[] = [];
+            if (Array.isArray(response)) {
+                newItems = response;
+            } else if (response && typeof response === 'object') {
+                newItems = (response as any).data || (response as any).results || (response as any).feedbacks || (response as any).items || [];
+            }
+
+            if (isInitial) {
+                setFeedbacks(newItems);
+            } else {
+                setFeedbacks(prev => [...prev, ...newItems]);
+            }
+
+            setPage(pageNum);
+
+            // Handle pagination end
+            if (Array.isArray(response)) {
+                if (response.length < 10) setHasMore(false);
+                else setHasMore(true);
+            } else {
+                const totalPages = (response as any).totalPages || (response as any).total_pages || 1;
+                if (pageNum >= totalPages) setHasMore(false);
+                else setHasMore(true);
+
+                if (newItems.length === 0) setHasMore(false);
+            }
+
         } catch (err) {
-            console.error("Failed to fetch testimonials", err);
+            console.error("Failed to fetch feedbacks", err);
         } finally {
             setIsLoading(false);
         }
@@ -58,19 +83,19 @@ const Testimonials = () => {
         setIsSubmitting(true);
 
         try {
-            await addDoc(collection(firestore, "testimonials"), {
+            await createFeedback({
                 name: formData.name,
                 rating: formData.rating,
                 feedback: formData.feedback,
-                date: serverTimestamp(),
             });
 
             toast({ title: "Feedback received!", description: "Thank you for your feedback." });
             setFormData({ name: "", rating: 5, feedback: "" });
-            await fetchTestimonials();
-        } catch (err) {
+            // Refresh with first page on new post
+            await fetchFeedbacks(1, true);
+        } catch (err: any) {
             console.error(err);
-            toast({ title: "Error", description: (err as any)?.message || "Failed to submit feedback." });
+            toast({ title: "Error", description: err.response?.data?.error || err.message || "Failed to submit feedback." });
         } finally {
             setIsSubmitting(false);
         }
@@ -119,12 +144,12 @@ const Testimonials = () => {
                                         required
                                         value={formData.name}
                                         onChange={handleChange}
-                                        className="bg-muted/50 border-white/10"
+                                        className="bg-background border-input text-foreground placeholder:text-muted-foreground focus:border-primary transition-all"
                                     />
                                 </div>
-
+ 
                                 <div className="space-y-2">
-                                    <Label>Rating</Label>
+                                    <Label className="text-foreground font-semibold">Rating</Label>
                                     <div className="flex gap-2">
                                         {[1, 2, 3, 4, 5].map((star) => (
                                             <button
@@ -142,9 +167,9 @@ const Testimonials = () => {
                                         ))}
                                     </div>
                                 </div>
-
+ 
                                 <div className="space-y-2">
-                                    <Label htmlFor="feedback">Feedback</Label>
+                                    <Label htmlFor="feedback" className="text-foreground font-semibold">Feedback</Label>
                                     <textarea
                                         id="feedback"
                                         name="feedback"
@@ -153,7 +178,7 @@ const Testimonials = () => {
                                         rows={4}
                                         value={formData.feedback}
                                         onChange={handleChange}
-                                        className="flex w-full rounded-md border border-white/10 bg-muted/50 px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 min-h-[100px]"
+                                        className="flex w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 min-h-[100px] text-foreground focus:border-primary transition-all"
                                     />
                                 </div>
 
@@ -169,43 +194,49 @@ const Testimonials = () => {
                         </div>
                     </div>
 
-                    {/* Testimonials List */}
+                    {/* Feedbacks List */}
                     <div className="animate-fade-in space-y-6" style={{ animationDelay: "0.3s" }}>
                         <h2 className="text-2xl font-bold mb-6 text-center lg:text-left">Recent Reviews</h2>
-                        {isLoading ? (
-                            <p className="text-muted-foreground">Loading reviews...</p>
-                        ) : testimonials.length === 0 ? (
+                        {feedbacks.length === 0 && !isLoading ? (
                             <div className="glass-card p-8 text-center text-muted-foreground">
                                 No reviews yet. Be the first to leave one!
                             </div>
                         ) : (
-                            <div className="grid gap-4 max-h-[600px] overflow-y-auto pr-2 custom-scrollbar">
-                                {testimonials.slice().reverse().map((t) => (
-                                    <div key={t.id} className="glass-card p-6 flex flex-col gap-3 group hover:border-primary/30 transition-colors">
+                            <div className="grid gap-4 max-h-[450px] overflow-y-auto pr-4 custom-scrollbar bg-white/5 backdrop-blur-sm p-4 rounded-xl border border-white/10 shadow-inner">
+                                {feedbacks.map((f) => (
+                                    <div key={f._id || f.id} className="glass-card p-6 flex flex-col gap-3 group hover:border-primary/30 transition-colors">
                                         <div className="flex justify-between items-start">
                                             <div className="flex items-center gap-3">
                                                 <div className="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center text-primary font-bold">
-                                                    {t.name.charAt(0).toUpperCase()}
+                                                    {f.name.charAt(0).toUpperCase()}
                                                 </div>
                                                 <div>
-                                                    <p className="font-semibold text-lg">{t.name}</p>
+                                                    <p className="font-semibold text-lg">{f.name}</p>
                                                     <div className="flex text-yellow-400">
                                                         {[...Array(5)].map((_, i) => (
                                                             <Star
                                                                 key={i}
-                                                                className={`w-4 h-4 ${i < t.rating ? "fill-current" : "text-gray-600 fill-none"}`}
+                                                                className={`w-4 h-4 ${i < f.rating ? "fill-current" : "text-gray-600 fill-none"}`}
                                                             />
                                                         ))}
                                                     </div>
                                                 </div>
                                             </div>
-                                            <span className="text-xs text-muted-foreground">
-                                                {new Date(t.date).toLocaleDateString()}
+                                            <span className="text-xs text-muted-foreground whitespace-nowrap">
+                                                {(f.createdAt || f.date)
+                                                    ? formatDistanceToNow(new Date(f.createdAt || f.date || ""), { addSuffix: true })
+                                                    : "Just now"}
                                             </span>
                                         </div>
-                                        <p className="text-muted-foreground mt-2 italic">"{t.feedback}"</p>
+                                        <p className="text-muted-foreground mt-2 italic">"{f.feedback || (f as any).comment || (f as any).message || (f as any).content || ""}"</p>
                                     </div>
                                 ))}
+
+                                {/* Loading trigger element */}
+                                <div ref={ref} className="h-10 flex items-center justify-center">
+                                    {isLoading && <p className="text-muted-foreground text-sm">Loading more...</p>}
+                                    {!hasMore && feedbacks.length > 0 && <p className="text-muted-foreground text-xs opacity-50">You've reached the end.</p>}
+                                </div>
                             </div>
                         )}
                     </div>

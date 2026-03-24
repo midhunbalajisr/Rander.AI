@@ -47,9 +47,9 @@ const Header = () => {
   }, []);
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 transition-all duration-500 py-4">
-      <div className="mx-4">
-        <nav className="relative px-4 md:px-6 py-3 md:py-4 flex items-center justify-between max-w-7xl mx-auto rounded-2xl overflow-hidden shadow-glow bg-black/40 backdrop-blur-xl border border-white/20">
+    <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${scrolled ? "py-2" : "py-4"}`}>
+      <div className={`mx-4 transition-all duration-500 ${scrolled ? "max-w-6xl" : "max-w-7xl"} mx-auto`}>
+        <nav className={`relative px-4 md:px-6 py-3 md:py-4 flex items-center justify-between mx-auto rounded-2xl overflow-hidden shadow-glow bg-black/40 backdrop-blur-xl border border-white/20 transition-all duration-500 ${scrolled ? "scale-[0.98]" : "scale-100"}`}>
 
           {/* Animated Vibrant Gradient Background */}
           <div className="absolute inset-0 z-0 bg-gradient-to-r from-cyan-500 via-purple-500 to-pink-500 opacity-95" />
@@ -90,23 +90,6 @@ const Header = () => {
               ))}
             </div>
 
-            {/* CTA Button - Merely Animated */}
-            <div className="hidden md:block">
-              <Button
-                variant="default"
-                className="bg-white text-blue-600 hover:bg-white/90 hover:text-blue-700 font-extrabold text-base shadow-lg shadow-cyan-500/30 relative overflow-hidden group/btn hover:-translate-y-1 hover:scale-105 transition-all duration-300 border-none px-6"
-                size="sm"
-                asChild
-              >
-                <Link to="/contact">
-                  <span className="relative z-10 flex items-center gap-2">
-                    Get Started
-                    <ArrowRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />
-                  </span>
-                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-cyan-200/50 to-transparent -translate-x-full group-hover/btn:animate-[shimmer_1s_infinite]" />
-                </Link>
-              </Button>
-            </div>
           </div>
         </nav>
       </div>
@@ -149,15 +132,6 @@ const Header = () => {
               </Link>
             ))}
             
-            <Button 
-              className="w-full bg-transparent text-white font-extrabold text-lg py-6 rounded-xl border-2 border-white/20 transition-all duration-300 hover:bg-gradient-to-r hover:from-yellow-400/40 hover:to-orange-500/40 hover:border-yellow-400/60 hover:shadow-lg hover:shadow-orange-500/20" 
-              size="default" 
-              asChild
-            >
-              <Link to="/contact" onClick={() => setMobileMenuOpen(false)}>
-                Get Started
-              </Link>
-            </Button>
           </div>
         </div>
       )}

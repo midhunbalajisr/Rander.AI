@@ -36,9 +36,9 @@ const About = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
-    <div className="min-h-screen relative text-white">
-      {/* Blur Blob Background */}
-      <div className="about-blob-bg" />
+    <div className="min-h-screen relative overflow-hidden">
+      {/* Background decoration - subtle like hero */}
+      <div className="absolute inset-x-0 top-0 h-[500px] bg-gradient-hero pointer-events-none" />
       
       {/* Scrollable Content Container */}
       <div className="pt-32 pb-20 px-6">
@@ -70,21 +70,6 @@ const About = () => {
         </div>
       )}
 
-      {/* Rain effect overlay */}
-      <div className="fixed inset-0 pointer-events-none overflow-hidden">
-        {Array.from({ length: 20 }).map((_, i) => (
-          <div
-            key={i}
-            className="absolute w-px bg-gradient-to-b from-transparent via-primary/30 to-transparent"
-            style={{
-              left: `${(i * 5) + Math.random() * 3}%`,
-              height: `${Math.random() * 100 + 50}px`,
-              animation: `rain-drop ${Math.random() * 2 + 2}s linear infinite`,
-              animationDelay: `${Math.random() * 3}s`,
-            }}
-          />
-        ))}
-      </div>
 
       <div className="max-w-5xl mx-auto relative">
         {/* Header */}
@@ -92,27 +77,24 @@ const About = () => {
           <span className="inline-block px-4 py-2 rounded-full text-xs font-semibold bg-primary/10 text-primary border border-primary/20 mb-6">
             Our Story
           </span>
-          <h1 className="font-display text-4xl sm:text-5xl md:text-6xl font-extrabold mb-6">
+          <h1 className="font-display text-4xl sm:text-5xl md:text-6xl font-extrabold mb-6 text-foreground">
             About <span className="text-gradient">RANDER<span className="text-red-500">.AI</span></span>
           </h1>
         </div>
 
         {/* Team Section */}
         <div className="relative -mx-6 px-6 pb-20 mb-20 overflow-hidden z-10">
-          {/* Geometric Background */}
-          <div className="absolute inset-0 custom-team-bg" />
-
           {/* Content */}
           <div className="relative z-10">
             <div className="text-center mb-12">
-              <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-cyan-400 via-blue-500 to-purple-600 flex items-center justify-center mx-auto mb-6 shadow-[0_0_40px_rgba(6,182,212,0.6)] border-2 border-cyan-300/50">
-                <Users className="w-10 h-10 text-white drop-shadow-[0_0_10px_rgba(255,255,255,0.8)]" />
+              <div className="w-16 h-16 rounded-2xl bg-primary/20 flex items-center justify-center mx-auto mb-6 border border-primary/30">
+                <Users className="w-8 h-8 text-primary" />
               </div>
-              <h2 className="font-display text-3xl sm:text-4xl font-bold mb-4 text-white" style={{ textShadow: '0 0 20px rgba(6,182,212,0.5), 0 2px 10px rgba(0,0,0,0.5)' }}>
-                Meet the <span className="text-cyan-300">Team</span>
+              <h2 className="font-display text-4xl font-bold mb-4 text-foreground">
+                Meet the <span className="text-primary">Team</span>
               </h2>
-              <p className="text-white/90 max-w-lg mx-auto font-medium" style={{ textShadow: '0 1px 8px rgba(0,0,0,0.5)' }}>
-                The brilliant minds behind RANDER<span className="text-cyan-200">.AI</span>, dedicated to building the future of intelligent debugging.
+              <p className="text-muted-foreground max-w-lg mx-auto">
+                The experts behind RANDER.AI, dedicated to building the future of intelligent debugging.
               </p>
             </div>
 
@@ -126,7 +108,7 @@ const About = () => {
                     <CarouselItem key={member.name} className="pl-4 md:basis-1/2 lg:basis-1/2">
                       {member.isFounder ? (
                         <div className="flex h-full items-center justify-center py-4">
-                          <div className="founder-flip-card">
+                          <div className="founder-flip-card bg-primary shadow-lg">
                             {/* Base Content (Shown initially) */}
                             <div className="founder-flip-base-content">
                               <h3 className="font-display text-2xl font-bold mb-2 tracking-wide">{member.name}</h3>
@@ -145,7 +127,7 @@ const About = () => {
                               {/* Dark gradient overlay for text readability over image */}
                               <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black/80 to-transparent rounded-b-[15px] z-0" />
                               
-                              <div className="relative z-10 text-center font-display drop-shadow-lg">
+                              <div className="relative z-10 text-center font-display drop-shadow-lg text-white">
                                 <h3 className="text-xl font-bold mb-1">{member.name}</h3>
                                 <p className="text-sm font-bold text-white/90">{member.role}</p>
                               </div>
@@ -211,9 +193,9 @@ const About = () => {
             <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center mb-6">
               <Target className="w-6 h-6 text-primary" />
             </div>
-            <h3 className="font-display text-xl font-bold mb-4">Our Vision</h3>
-            <p className="text-slate-800 font-medium leading-relaxed">
-              RANDER<span className="text-red-500">.AI</span> was built with a vision to remove complexity from software
+            <h3 className="font-display text-xl font-bold mb-4 text-white">Our Vision</h3>
+            <p className="text-muted-foreground leading-relaxed">
+              RANDER.AI was built with a vision to remove complexity from software
               maintenance. Our AI understands code, detects errors, and fixes them
               intelligently — transforming how development teams work.
             </p>
@@ -223,8 +205,8 @@ const About = () => {
             <div className="w-12 h-12 rounded-lg bg-accent/10 flex items-center justify-center mb-6">
               <Lightbulb className="w-6 h-6 text-accent" />
             </div>
-            <h3 className="font-display text-xl font-bold mb-4">Our Philosophy</h3>
-            <p className="text-slate-800 font-medium leading-relaxed">
+            <h3 className="font-display text-xl font-bold mb-4 text-white">Our Philosophy</h3>
+            <p className="text-muted-foreground leading-relaxed">
               Inspired by modern AI-first platforms, we focus on clarity, simplicity,
               and reliability. Every feature we build is designed to make developers'
               lives easier and products more stable.
