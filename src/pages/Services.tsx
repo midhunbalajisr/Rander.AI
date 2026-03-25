@@ -1,7 +1,9 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Bug, Cpu, RefreshCw, ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
+import { Bug, Cpu, RefreshCw, ArrowRight, ChevronLeft, ChevronRight, Quote, Star } from "lucide-react";
+import { Carousel, TestimonialCard } from "@/components/ui/testimonial-carousel";
+import { getFeedbacks, Feedback } from "@/api/feedbacks";
 
 const services = [
   {
@@ -29,6 +31,18 @@ const services = [
 
 const Services = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [feedbacks, setFeedbacks] = useState<Feedback[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    getFeedbacks({ limit: 20 })
+      .then((res) => {
+        if (Array.isArray(res)) setFeedbacks(res);
+        else if (res?.data) setFeedbacks(res.data);
+      })
+      .catch(console.error)
+      .finally(() => setLoading(false));
+  }, []);
 
   const nextSlide = () => {
     setCurrentSlide((prev) => (prev + 1) % services.length);
@@ -122,6 +136,51 @@ const Services = () => {
               />
             ))}
           </div>
+        </div>
+
+        {/* Testimonials Section */}
+        <div className="mb-20 animate-fade-in">
+          <div className="text-center mb-10">
+            <span className="inline-block px-4 py-2 rounded-full text-xs font-semibold bg-primary/10 text-primary border border-primary/20 mb-6">
+              Testimonials
+            </span>
+            <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold mb-4 text-slate-900">
+              What <span className="text-gradient">People Say</span>
+            </h2>
+            <p className="text-lg text-slate-700 max-w-2xl mx-auto font-medium">
+              Don't just take our word for it. Here's what our users have to say about Rander.AI.
+            </p>
+          </div>
+
+          {loading ? (
+            <div className="text-center py-12 text-slate-500 text-lg">Loading feedback...</div>
+          ) : feedbacks.length > 0 ? (
+            <Carousel
+              items={feedbacks.map((f, index) => (
+                <TestimonialCard
+                  key={f._id || index}
+                  testimonial={{
+                    name: f.name,
+                    designation: `${'★'.repeat(Math.min(f.rating, 5))} ${f.rating}/5`,
+                    description: f.feedback,
+                    profileImage: `https://ui-avatars.com/api/?name=${encodeURIComponent(f.name)}&background=random&size=150`
+                  }}
+                  index={index}
+                />
+              ))}
+            />
+          ) : (
+            <div className="flex flex-col items-center justify-center py-16 text-center">
+              <div className="w-24 h-24 rounded-full bg-gradient-to-b from-[#f2f0eb] to-[#fff9eb] flex items-center justify-center mb-6 shadow-md border-2 border-[rgba(59,59,59,0.1)]">
+                <Quote className="w-10 h-10 text-[rgba(31,27,29,0.3)]" />
+              </div>
+              <p className="text-2xl font-display italic text-slate-400 mb-2">No feedback yet.</p>
+              <p className="text-slate-400 text-base">Be the first to share your experience with Rander.AI!</p>
+              <div className="flex gap-1 mt-4">
+                {[1,2,3,4,5].map(s => <Star key={s} className="w-5 h-5 text-amber-300" />)}
+              </div>
+            </div>
+          )}
         </div>
 
         {/* CTA Section */}

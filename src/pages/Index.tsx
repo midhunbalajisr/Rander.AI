@@ -2,6 +2,17 @@ import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Zap, Clock, Code, Search, CheckCircle, ChevronLeft, ChevronRight } from "lucide-react";
+import { LogoCloud } from "@/components/ui/logo-cloud";
+
+const logos = [
+  { src: "/sri-sai-travels.jpg", alt: "Sri Sai Travels" },
+  { src: "/madras-college.png", alt: "Madras Engineering College" },
+  { src: "https://placehold.co/200x80/transparent/333333?text=TechFlow", alt: "TechFlow" },
+  { src: "https://placehold.co/200x80/transparent/333333?text=Innovate+Inc", alt: "Innovate Inc" },
+  { src: "https://placehold.co/200x80/transparent/333333?text=Global+Systems", alt: "Global Systems" },
+  { src: "https://placehold.co/200x80/transparent/333333?text=NextGen+AI", alt: "NextGen AI" },
+  { src: "https://placehold.co/200x80/transparent/333333?text=Future+Corp", alt: "Future Corp" },
+];
 
 const problemPoints = [
   { icon: Clock, text: "Manual debugging wastes time" },
@@ -107,6 +118,14 @@ const Index = () => {
           <div className="w-6 h-10 rounded-full border-2 border-muted-foreground/30 flex items-start justify-center p-2 animate-bounce">
             <div className="w-1 h-2 bg-primary rounded-full" />
           </div>
+        </div>
+      </section>
+
+      {/* Logo Cloud Section */}
+      <section className="py-10 border-y border-border/40 bg-muted/20">
+        <div className="max-w-6xl mx-auto px-6 text-center">
+          <p className="text-sm font-medium text-muted-foreground mb-6">Trusted by innovative teams worldwide</p>
+          <LogoCloud logos={logos} />
         </div>
       </section>
 
