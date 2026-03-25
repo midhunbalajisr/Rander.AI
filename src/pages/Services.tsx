@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Bug, Cpu, RefreshCw, ArrowRight, ChevronLeft, ChevronRight, Quote, Star } from "lucide-react";
 import { Carousel, TestimonialCard } from "@/components/ui/testimonial-carousel";
 import { getFeedbacks, Feedback } from "@/api/feedbacks";
+import { fallbackTestimonials } from "./fallbackTestimonials";
 
 const services = [
   {
@@ -154,7 +155,7 @@ const Services = () => {
 
           {loading ? (
             <div className="text-center py-12 text-slate-500 text-lg">Loading feedback...</div>
-          ) : feedbacks.length > 0 ? (
+          ) : feedbacks.length > 0 || true ? (  // Always show if fallback present
             <Carousel
               items={feedbacks.map((f, index) => (
                 <TestimonialCard

@@ -100,7 +100,13 @@ export default {
           to: { transform: "translateX(calc(-100% - var(--gap)))" },
         },
       },
-      animation: {
+        safelist: [
+          'animate-custom-marquee',
+          {
+            pattern: /custom-marquee/,
+          },
+        ],
+    animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
         shimmer: "shimmer 2s linear infinite",

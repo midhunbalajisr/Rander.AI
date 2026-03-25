@@ -17,7 +17,7 @@ export function LogoCloud({ className, logos, ...props }: LogoCloudProps) {
     <div
       {...props}
       className={cn(
-        "overflow-hidden py-4 [mask-image:linear-gradient(to_right,transparent,black,transparent)]",
+        "overflow-hidden py-2 [mask-image:linear-gradient(to_right,transparent,black,transparent)]",
         className
       )}
     >
@@ -25,7 +25,7 @@ export function LogoCloud({ className, logos, ...props }: LogoCloudProps) {
         {logos.map((logo) => (
           <img
             alt={logo.alt}
-            className="pointer-events-none h-24 md:h-32 w-auto object-contain select-none mix-blend-multiply dark:mix-blend-normal"
+            className="pointer-events-none h-12 md:h-16 w-auto object-contain select-none mix-blend-multiply dark:mix-blend-normal"
             height={logo.height || "auto"}
             key={`logo-${logo.alt}`}
             loading="lazy"
