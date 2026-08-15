@@ -3,6 +3,9 @@ import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Zap, Clock, Code, Search, CheckCircle, ChevronLeft, ChevronRight } from "lucide-react";
 
+import { AdSense } from "@/components/AdSense";
+import { CosmicGlowButton } from "@/components/ui/spark-button";
+
 const problemPoints = [
   { icon: Clock, text: "Manual debugging wastes time" },
   { icon: Code, text: "High developer dependency" },
@@ -81,11 +84,9 @@ const Index = () => {
             className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16 animate-fade-in"
             style={{ animationDelay: "0.4s" }}
           >
-            <Button variant="hero" size="xl" asChild>
-              <Link to="/contact">
-                Get Started <ArrowRight className="ml-2" />
-              </Link>
-            </Button>
+            <CosmicGlowButton as={Link} to="/contact" color="hsl(var(--primary))" speed="4s">
+              Get Started <ArrowRight className="ml-2 inline-block w-5 h-5" />
+            </CosmicGlowButton>
             <Button variant="glass" size="xl" asChild>
               <Link to="/services">Explore Services</Link>
             </Button>
@@ -246,6 +247,13 @@ const Index = () => {
               </div>
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* AdSense Section */}
+      <section className="py-8 px-6">
+        <div className="max-w-6xl mx-auto">
+          <AdSense />
         </div>
       </section>
 
