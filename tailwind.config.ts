@@ -103,6 +103,24 @@ export default {
           "0%": { transform: "rotate(0deg)" },
           "100%": { transform: "rotate(360deg)" },
         },
+        "fire-rise": {
+          "0%": { transform: "translateY(100vh) scale(0.5)", opacity: "0" },
+          "20%": { opacity: "0.8" },
+          "80%": { opacity: "0.6" },
+          "100%": { transform: "translateY(-20vh) scale(1.5)", opacity: "0" },
+        },
+        "pulse-slow": {
+          "0%, 100%": { opacity: "0.15", transform: "scale(1)" },
+          "50%": { opacity: "0.25", transform: "scale(1.1)" },
+        },
+        "gradient-shift": {
+          "0%, 100%": { backgroundPosition: "0% 50%" },
+          "50%": { backgroundPosition: "100% 50%" },
+        },
+        "float": {
+          "0%, 100%": { transform: "translateY(0px)", opacity: "1" },
+          "50%": { transform: "translateY(-20px)", opacity: "1" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
@@ -112,6 +130,10 @@ export default {
         "scale-in": "scale-in 0.4s ease-out forwards",
         "glow-scale": "glow-scale 5s ease-in-out infinite",
         "glow-slide": "glow-slide 5s linear infinite",
+        "fire-rise": "fire-rise 3s ease-in forwards",
+        "pulse-slow": "pulse-slow 4s ease-in-out infinite",
+        "gradient": "gradient-shift 8s ease infinite",
+        "float": "float 6s ease-in-out infinite",
       },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
@@ -119,5 +141,6 @@ export default {
       },
     },
   },
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
   plugins: [require("tailwindcss-animate")],
 } satisfies Config;
